@@ -242,9 +242,9 @@
 <p class="text-orange-900 font-body-medium leading-snug">
                 First deposit complete! You earned XP and unlocked a streak.
               </p>
-</div>
-</div>
-<span class="text-orange-900 font-bold text-xl ml-2 font-headline-card">+150 XP</span>
+              </div>
+            </div>
+            <span id="xp-earned" class="text-orange-900 font-bold text-xl ml-2 font-headline-card">+0 XP</span>
 </div>
 <!-- Peach Card: Verification -->
 <div class="bg-peachBg p-5 rounded-2xl border border-[#F5E1CC] flex gap-4" data-purpose="verification-info">
@@ -346,6 +346,25 @@ document.querySelectorAll('nav button').forEach(function(btn){
   if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
   if(t.includes('Rewards'))btn.onclick=function(){sfNav('../rewards_store_refined_format/code.html')};
 });
+})();
+// Read deposit result (if any) from sessionStorage and update XP card
+(function(){
+  try{
+    var raw = sessionStorage.getItem('last_deposit');
+    if(!raw) return;
+    var deposit = JSON.parse(raw);
+    var xpEl = document.getElementById('xp-earned');
+    if(xpEl && typeof deposit.xp_earned !== 'undefined'){
+      xpEl.textContent = (deposit.xp_earned>0?'+':'') + deposit.xp_earned + ' XP';
+    }
+    // also update the small text message in the XP card if present
+    var xpCard = document.querySelector('[data-purpose="xp-info"] p');
+    if(xpCard && deposit.message){
+      xpCard.textContent = deposit.message;
+    }
+    // remove it so refresh doesn't reuse stale data
+    sessionStorage.removeItem('last_deposit');
+  }catch(e){console.error('failed to read deposit result',e)}
 })();
 </script>
 </body></html>

@@ -73,5 +73,10 @@
         target_amount: payload.target_amount,
       }),
     }),
+    // Onboarding deposits
+    makeDeposit: (userId, amount) => request('/onboard/deposit', {
+      method: 'POST',
+      body: JSON.stringify({ user_id: userId, amount: amount }),
+    }),
   };
 })();

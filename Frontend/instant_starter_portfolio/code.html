@@ -150,6 +150,7 @@
 /* Stat card hover */
 [data-purpose="stat-card"]:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 24px rgba(0,0,0,.1);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
 </style>
+<script src="../api-client.js"></script>
 <div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
 <div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Instant Starter Portfolio</div></div>
 <script>
@@ -183,10 +184,31 @@ document.querySelectorAll('button').forEach(function(btn){
 });
 function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
-/* Navigation */
+/* Navigation + Deposit flow */
 document.querySelectorAll('button').forEach(function(btn){
   var t=btn.textContent.trim();
-  if(t.includes('Start in 60')||t.includes("it's free")||t.includes('free'))btn.onclick=function(){sfNav('../select_investment_type_standardized_format/code.html')};
+  // Keep the original CTA behavior for the starter button: navigate to the
+  // select-investment page. Only invest-labeled buttons run the deposit flow.
+  if(t.toLowerCase().includes('start in 60') || t.toLowerCase().includes("it's free") || t.toLowerCase().includes('free')){
+    btn.onclick = function(){ sfNav('../select_investment_type_standardized_format/code.html'); };
+  } else if(t.toLowerCase().includes('invest')){
+    btn.onclick = async function(){
+      var origText = btn.textContent;
+      try{
+        btn.disabled = true; btn.classList.add('opacity-70'); btn.textContent = 'Processing...';
+        var amount = 50;
+        try{ var m = (origText||'').match(/\$(\d+(?:\.\d{1,2})?)/); if(m) amount = parseFloat(m[1]); }catch(e){}
+        var user = await window.FutureFlexAPI.resolveDemoUser();
+        await window.FutureFlexAPI.makeDeposit(user.id, amount);
+        btn.textContent = 'Success'; btn.classList.remove('opacity-70'); btn.classList.add('bg-green-500');
+        setTimeout(function(){ sfNav('../financial_dashboard_animated_experience/code.html'); }, 900);
+      }catch(err){
+        console.error('Deposit failed', err);
+        btn.disabled = false; btn.classList.remove('opacity-70'); btn.textContent = origText;
+        alert('Deposit failed: ' + (err.message || err));
+      }
+    };
+  }
   if(t.includes('Sign in')||t.includes('sign in'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
 });
 })();

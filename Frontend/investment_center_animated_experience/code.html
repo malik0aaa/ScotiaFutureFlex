@@ -343,8 +343,7 @@
 </section>
 <!-- CTA Section -->
 <section class="space-y-4 pb-12 reveal-on-scroll">
-<button class="w-full py-4 bg-scotia-red-bright text-white font-label-cta text-[16px] rounded-xl hover:bg-scotia-red-dark transition-all active:scale-95 shadow-lg shadow-scotia-red-bright/20"
-    onclick="(function(){const t='{{DATA:SCREEN:SCREEN_37}}'; if (typeof t==='string' && !t.includes('{{')) { window.location.href = t; } else { console.warn('Unresolved navigation target', t); } })()">
+<button id="invest-cta" class="w-full py-4 bg-scotia-red-bright text-white font-label-cta text-[16px] rounded-xl hover:bg-scotia-red-dark transition-all active:scale-95 shadow-lg shadow-scotia-red-bright/20">
                         Invest $<span id="button-amount">50</span> now
                     </button>
 <div class="text-center space-y-1">
@@ -511,7 +510,26 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../in
 document.querySelectorAll('button').forEach(function(btn){
   var t=btn.textContent.trim();
   if(t.includes('arrow_back'))btn.onclick=function(){sfNav('../select_investment_type_standardized_format/code.html')};
-  if(t.toLowerCase().includes('confirm')||t.toLowerCase().includes('invest now')||t.includes('Confirm Investment'))btn.onclick=function(){sfNav('../investment_confirmation_simplified_flow/code.html')};
+    if(t.toLowerCase().includes('confirm')||t.toLowerCase().includes('invest now')||t.includes('Confirm Investment')){
+        btn.onclick = async function(){
+            var orig = btn.textContent;
+            try{
+                btn.disabled = true; btn.classList.add('opacity-70'); btn.textContent = 'Processing...';
+                // parse amount if present in button text
+                var amount = 50;
+                try{ var m = (orig||'').match(/\$(\d+(?:\.\d{1,2})?)/); if(m) amount = parseFloat(m[1]); }catch(e){}
+                var user = await window.FutureFlexAPI.resolveDemoUser();
+                var resp = await window.FutureFlexAPI.makeDeposit(user.id, amount);
+                // store deposit response for the confirmation screen and navigate immediately
+                try{ sessionStorage.setItem('last_deposit', JSON.stringify(resp)); }catch(e){}
+                sfNav('../investment_confirmation_simplified_flow/code.html');
+            }catch(err){
+                console.error('Deposit failed', err);
+                btn.disabled = false; btn.classList.remove('opacity-70'); btn.textContent = orig;
+                alert('Deposit failed: ' + (err.message || err));
+            }
+        };
+    }
 });
 document.querySelectorAll('nav button').forEach(function(btn){
   var t=btn.textContent.trim();
@@ -520,5 +538,31 @@ document.querySelectorAll('nav button').forEach(function(btn){
   if(t.includes('Rewards'))btn.onclick=function(){sfNav('../rewards_store_refined_format/code.html')};
 });
 })();
+// Explicit handler for the main Invest CTA on this screen
+(function(){
+    var btn = document.getElementById('invest-cta');
+    if(!btn) return;
+    btn.addEventListener('click', async function(){
+        var orig = btn.textContent;
+        try{
+            btn.disabled = true; btn.classList.add('opacity-70'); btn.textContent = 'Processing...';
+            var amtEl = document.getElementById('button-amount');
+            var amount = 50;
+            if(amtEl) {
+                var m = (amtEl.textContent||'').match(/\d+(?:\.\d{1,2})?/);
+                if(m) amount = parseFloat(m[0]);
+            }
+            var user = await window.FutureFlexAPI.resolveDemoUser();
+            await window.FutureFlexAPI.makeDeposit(user.id, amount);
+            btn.textContent = 'Success'; btn.classList.remove('opacity-70'); btn.classList.add('bg-green-500');
+            setTimeout(function(){ sfNav('../financial_dashboard_animated_experience/code.html'); }, 900);
+        }catch(err){
+            console.error('Deposit failed', err);
+            btn.disabled = false; btn.classList.remove('opacity-70'); btn.textContent = orig;
+            alert('Deposit failed: ' + (err.message || err));
+        }
+    });
+})();
 </script>
+<script src="../api-client.js"></script>
 </body></html>
