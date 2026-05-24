@@ -12,98 +12,112 @@
             darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
-                        "on-tertiary-container": "#fdfaf3",
-                        "error": "#ba1a1a",
-                        "secondary": "#5d5f5b",
-                        "on-error-container": "#93000a",
-                        "surface-container": "#eeeeeb",
-                        "surface": "#f9f9f6",
-                        "tertiary": "#5b5a56",
-                        "inverse-on-surface": "#f1f1ee",
-                        "on-primary-container": "#fff7f6",
-                        "primary-container": "#e60023",
-                        "inverse-primary": "#ffb3ad",
-                        "secondary-fixed": "#e3e3de",
-                        "on-error": "#ffffff",
-                        "primary-fixed-dim": "#ffb3ad",
-                        "primary-fixed": "#ffdad7",
-                        "on-secondary-fixed-variant": "#464744",
-                        "secondary-container": "#e0e0db",
-                        "surface-bright": "#f9f9f6",
-                        "on-tertiary-fixed": "#1c1c18",
-                        "on-surface-variant": "#5e3f3c",
-                        "on-primary": "#ffffff",
-                        "on-secondary-container": "#62635f",
-                        "on-primary-fixed": "#410004",
-                        "primary": "#b7001a",
-                        "on-secondary-fixed": "#1a1c19",
-                        "on-background": "#1a1c1b",
-                        "on-tertiary": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "outline": "#936e6b",
-                        "error-container": "#ffdad6",
-                        "surface-container-highest": "#e2e3e0",
-                        "surface-container-low": "#f4f4f1",
-                        "outline-variant": "#e8bcb8",
-                        "tertiary-container": "#74736e",
-                        "on-surface": "#1a1c1b",
-                        "tertiary-fixed": "#e5e2dc",
-                        "inverse-surface": "#2f312f",
-                        "surface-variant": "#e2e3e0",
-                        "on-tertiary-fixed-variant": "#474742",
-                        "surface-tint": "#c0001b",
-                        "surface-container-high": "#e8e8e5",
-                        "tertiary-fixed-dim": "#c9c6c0",
-                        "on-secondary": "#ffffff",
-                        "background": "#f9f9f6",
-                        "surface-dim": "#dadad7",
-                        "on-primary-fixed-variant": "#930012",
-                        "secondary-fixed-dim": "#c6c7c2",
+                    colors: {
                         "scotia-red-bright": "#ed1c24",
-                        "scotia-red-dark": "#990000"
+                        "scotia-red-dark": "#990000",
+                        secondary: "#5d5f5b",
+                        "on-surface": "#1a1c1b",
+                        surface: "#f9f9f6",
+                        "surface-dim": "#dadad7",
+                        background: "#f9f9f6",
                     },
-                    "borderRadius": {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
+                    borderRadius: {
+                        DEFAULT: "1rem",
+                        lg: "2rem",
+                        xl: "3rem",
+                        full: "9999px",
                     },
-                    "spacing": {
-                        "lg": "16px",
-                        "sm": "8px",
-                        "section": "64px",
-                        "xxs": "4px",
-                        "xxl": "32px",
-                        "xs": "6px",
-                        "xl": "24px",
-                        "md": "12px",
-                        "gutter-mobile": "1.25rem"
+                    spacing: {
+                        lg: "16px",
+                        sm: "8px",
+                        xs: "6px",
+                        xl: "24px",
+                        md: "12px",
+                        "gutter-mobile": "1.25rem",
                     },
-                    "fontFamily": {
-                        "body-md": ["Clash Display", "sans-serif"],
-                        "heading-xl": ["Clash Display", "sans-serif"],
-                        "display-xl": ["Clash Display", "sans-serif"],
-                        "display-lg": ["Clash Display", "sans-serif"],
-                        "button-md": ["Clash Display", "sans-serif"],
-                        "sans": ["Clash Display", "sans-serif"]
+                    fontFamily: {
+                        sans: ["Clash Display", "sans-serif"],
                     },
-                    "fontSize": {
-                        "body-md": ["16px", {"lineHeight": "1.4", "fontWeight": "400"}],
-                        "heading-xl": ["28px", {"lineHeight": "1.2", "letterSpacing": "-1.2px", "fontWeight": "700"}],
-                        "display-xl": ["70px", {"lineHeight": "1.1", "letterSpacing": "-1.2px", "fontWeight": "600"}],
-                        "display-lg": ["44px", {"lineHeight": "1.15", "letterSpacing": "-0.8px", "fontWeight": "700"}],
-                        "button-md": ["14px", {"lineHeight": "1", "fontWeight": "700"}]
-                    }
                 },
             },
         }
     </script>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
+        .ios-notch {
+                                                                            `;
+                                                                        }).join('');
+
+                                                                        document.querySelectorAll('.redeem-btn').forEach((btn) => {
+                                                                            btn.addEventListener('click', async function() {
+                                                                                if (!currentUserId || this.disabled) {
+                                                                                    return;
+                                                                                }
+
+                                                                                try {
+                                                                                    const result = await api.request(`/rewards/${this.dataset.rewardId}/redeem?user_id=${currentUserId}`, {
+                                                                                        method: 'POST',
+                                                                                    });
+                                                                                    currentXp = result.remaining_xp;
+                                                                                    await loadRewards();
+                                                                                } catch (error) {
+                                                                                    this.classList.add('shake');
+                                                                                    setTimeout(() => this.classList.remove('shake'), 500);
+                                                                                }
+                                                                            });
+                                                                        });
+                                                                    }
+
+                                                                    async function loadRewards() {
+                                                                        const user = await api.resolveDemoUser();
+                                                                        currentUserId = user.id;
+                                                                        const catalog = await api.getRewards(user.id);
+                                                                        currentXp = catalog.total_xp;
+                                                                        updateHeaderAndProgress();
+                                                                        renderRewards(catalog.rewards);
+                                                                    }
+
+                                                                    loadRewards().catch(function() {
+                                                                        xpBalanceHeader.textContent = 'Unable to load rewards';
+                                                                        nextTierLabelEl.textContent = 'Backend offline';
+                                                                    });
+                                                                })();
+                                                        </script>
+                                        const catalog = await api.getRewards(user.id);
+                                        currentXp = catalog.total_xp;
+                                        updateHeaderAndProgress();
+                                        renderRewards(catalog.rewards);
+                                        bindHandlers();
+                                    }
+
+                                    function bindHandlers() {
+                                        document.querySelectorAll('.redeem-btn').forEach(btn => {
+                                            btn.addEventListener('click', async function() {
+                                                if (this.disabled || !currentUserId) {
+                                                    return;
+                                                }
+
+                                                const rewardId = this.dataset.rewardId;
+
+                                                try {
+                                                    const result = await api.request(`/rewards/${rewardId}/redeem?user_id=${currentUserId}`, {
+                                                        method: 'POST',
+                                                    });
+
+                                                    currentXp = result.remaining_xp;
+                                                    await refreshRewards();
+                                                } catch (error) {
+                                                    this.classList.add('shake');
+                                                    setTimeout(() => this.classList.remove('shake'), 500);
+                                                }
+                                            });
+                                        });
+                                    }
+
+                                    refreshRewards().catch(() => {
+                                        xpBalanceHeader.textContent = 'Unable to load rewards';
+                                        nextTierLabelEl.textContent = 'Backend offline';
+                                    });
+                                })();
         .ios-notch {
             width: 160px;
             height: 30px;
@@ -430,15 +444,80 @@
 </style>
 <div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
 <div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Rewards Store</div></div>
+<script src="../api-client.js"></script>
 <script>
 (function(){
+var api = window.FutureFlexAPI;
 var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
 var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
+var xpBalanceHeader=document.getElementById('xp-balance-header');
+var progressBarEl=document.getElementById('xp-progress-bar');
+var nextTierLabelEl=document.getElementById('xp-next-tier-label');
+var rewardsContainer=document.getElementById('rewards-container');
+
+function rewardIcon(reward){
+    if(reward.redeemed) return 'check_circle';
+    if(reward.category === 'cashback') return 'percent';
+    if(reward.category === 'bonus_interest') return 'savings';
+    if(reward.category === 'free_trade') return 'swap_horiz';
+    return 'redeem';
+}
+
+function updateHeader(currentXp){
+    xpBalanceHeader.textContent = currentXp + ' XP available to spend';
+    if(currentXp < 1000){
+        var progress = (currentXp / 1000) * 100;
+        progressBarEl.style.width = progress + '%';
+        nextTierLabelEl.textContent = (1000 - currentXp) + ' XP TO GOLD';
+    } else {
+        progressBarEl.style.width = '100%';
+        nextTierLabelEl.textContent = 'GOLD ACHIEVED';
+    }
+}
+
+async function loadRewards(){
+    var user = await api.resolveDemoUser();
+    var catalog = await api.getRewards(user.id);
+    updateHeader(catalog.total_xp);
+
+    rewardsContainer.innerHTML = catalog.rewards.map(function(reward){
+        var canAfford = catalog.total_xp >= reward.xp_cost;
+        var locked = reward.redeemed || !canAfford;
+        var buttonHtml = reward.redeemed
+            ? '<div class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gray-100 border border-gray-200"><span class="material-symbols-outlined text-[16px] text-emerald-600" style="font-variation-settings: \'FILL\' 1;">check_circle</span><span class="text-[10px] text-secondary font-bold uppercase tracking-wide">Redeemed</span></div>'
+            : '<button class="redeem-btn ' + (canAfford ? 'bg-scotia-red-bright text-white shadow-sm' : 'bg-gray-300 text-gray-500 cursor-not-allowed') + ' text-[11px] uppercase font-bold px-5 py-2.5 rounded-full active:scale-95 transition-all" data-reward-id="' + reward.id + '" ' + (canAfford ? '' : 'disabled') + '>' + (canAfford ? 'Redeem' : 'Insufficient') + '</button>';
+
+        return '<div class="reward-card flex justify-between items-center p-lg border-b border-gray-50 transition-all duration-300 ' + (locked ? 'bg-gray-50' : 'active:bg-gray-50') + '" data-reward-id="' + reward.id + '">'
+            + '<div class="reward-content flex items-center gap-4 ' + (locked ? 'grayscale' : '') + '">'
+            + '<div class="w-12 h-12 rounded-xl ' + (reward.redeemed ? 'bg-gray-100 text-gray-400' : 'bg-red-50 text-scotia-red-bright') + ' flex items-center justify-center">'
+            + '<span class="material-symbols-outlined text-[24px]">' + rewardIcon(reward) + '</span>'
+            + '</div>'
+            + '<div><p class="font-bold text-[15px] text-on-surface">' + reward.name + '</p><p class="text-[11px] text-secondary font-bold uppercase tracking-wider mt-0.5">' + reward.xp_cost + ' XP</p></div>'
+            + '</div>'
+            + buttonHtml
+            + '</div>';
+    }).join('');
+
+    document.querySelectorAll('.redeem-btn').forEach(function(btn){
+        btn.addEventListener('click', async function(){
+            if(this.disabled) return;
+            try {
+                var userAgain = await api.resolveDemoUser();
+                await api.request('/rewards/' + this.dataset.rewardId + '/redeem?user_id=' + userAgain.id, { method: 'POST' });
+                await loadRewards();
+            } catch (error) {
+                this.classList.add('shake');
+                setTimeout(function(){ btn.classList.remove('shake'); }, 500);
+            }
+        });
+    });
+}
+
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
 (function loop(){C.style.left=mx+'px';C.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;R.style.left=rx+'px';R.style.top=ry+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;G.style.left=gx+'px';G.style.top=gy+'px';requestAnimationFrame(loop)})();
 document.querySelectorAll('button,a,[role=button],.cursor-pointer,input,select').forEach(function(el){
-  el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(237,28,36,.8)'});
-  el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(237,28,36,.4)'});
+    el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(237,28,36,.8)'});
+    el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(237,28,36,.4)'});
 });
 document.addEventListener('mousedown',function(){C.style.transform='translate(-50%,-50%) scale(.4)';R.style.transform='translate(-50%,-50%) scale(.8)'});
 document.addEventListener('mouseup',function(){C.style.transform='translate(-50%,-50%) scale(1)';R.style.transform='translate(-50%,-50%) scale(1)'});
@@ -448,28 +527,24 @@ setTimeout(function(){logo.style.opacity='1';logo.style.transform='translateY(0)
 setTimeout(function(){OV.style.opacity='0';OV.style.transform='translateY(-100%)'},650);
 setTimeout(function(){OV.remove()},1200);
 setTimeout(function(){
-  var items=document.querySelectorAll('section,.rounded-xl,.rounded-2xl,[class*="stagger"],[class*="animate-slide"]');
-  items.forEach(function(el,i){if(!el.closest('#sf-ov')){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},750+i*70)}});
+    var items=document.querySelectorAll('section,.rounded-xl,.rounded-2xl,[class*="stagger"],[class*="animate-slide"]');
+    items.forEach(function(el,i){if(!el.closest('#sf-ov')){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},750+i*70)}});
 },120);
-document.querySelectorAll('button').forEach(function(btn){
-  btn.addEventListener('click',function(e){
-    var rpl=document.createElement('span');
-    rpl.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.3);width:8px;height:8px;left:'+(e.offsetX-4)+'px;top:'+(e.offsetY-4)+'px;transform:scale(0);animation:sfRipple .5s ease forwards;pointer-events:none;';
-    if(getComputedStyle(this).position==='static')this.style.position='relative';
-    this.style.overflow='hidden';this.appendChild(rpl);setTimeout(function(){rpl.remove()},500);
-  });
-});
 document.querySelectorAll('.rounded-xl,.rounded-2xl,.shadow-sm,.shadow-md,.shadow-lg').forEach(function(el){
-  if(el.children.length>0&&!el.matches('nav,header,#sf-ov *'))el.classList.add('sf-lift');
+    if(el.children.length>0&&!el.matches('nav,header,#sf-ov *'))el.classList.add('sf-lift');
 });
 function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
-/* Navigation */
 document.querySelectorAll('nav button').forEach(function(btn){
-  var t=btn.textContent.trim();
-  if(t.includes('Home'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
-  if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
-  if(t.includes('Invest'))btn.onclick=function(){sfNav('../instant_starter_portfolio/code.html')};
+    var t=btn.textContent.trim();
+    if(t.includes('Home'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
+    if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
+    if(t.includes('Invest'))btn.onclick=function(){sfNav('../instant_starter_portfolio/code.html')};
+});
+
+loadRewards().catch(function(){
+    xpBalanceHeader.textContent = 'Unable to load rewards';
+    nextTierLabelEl.textContent = 'Backend offline';
 });
 })();
 </script>

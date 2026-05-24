@@ -308,6 +308,146 @@
   /* Progress bars animate on card visible */
   .phone-card.visible .prev-progress-fill,
   .phone-card.visible .prev-xp-fill { transition-delay: .3s !important; }
+
+  /* ── Live backend panel ── */
+  .live-panel {
+    max-width: 1300px;
+    margin: 0 auto 28px;
+    padding: 0 32px;
+  }
+  .live-shell {
+    position: relative;
+    border-radius: 28px;
+    padding: 24px;
+    background:
+      radial-gradient(circle at top left, rgba(237,28,36,.24), transparent 34%),
+      radial-gradient(circle at right bottom, rgba(0,62,194,.18), transparent 28%),
+      linear-gradient(180deg, rgba(16,16,22,.98), rgba(9,9,12,.98));
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 24px 70px rgba(0,0,0,.45);
+    overflow: hidden;
+  }
+  .live-shell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,.05), transparent 42%);
+    pointer-events: none;
+  }
+  .live-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+  }
+  .live-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.04);
+    color: rgba(255,255,255,.72);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .live-title {
+    font-size: clamp(24px, 3vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -.03em;
+  }
+  .live-copy {
+    margin-top: 10px;
+    color: rgba(255,255,255,.55);
+    max-width: 640px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .live-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.05);
+    color: rgba(255,255,255,.75);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .live-status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #6ee7b7;
+    box-shadow: 0 0 0 4px rgba(110,231,183,.15);
+  }
+  .live-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .live-stat {
+    padding: 16px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.07);
+    min-height: 110px;
+  }
+  .live-stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: rgba(255,255,255,.38);
+    margin-bottom: 10px;
+  }
+  .live-stat-value {
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -.04em;
+  }
+  .live-stat-note {
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,.55);
+    line-height: 1.45;
+  }
+  .live-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .live-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 16px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .live-action:hover {
+    transform: translateY(-1px);
+    border-color: rgba(237,28,36,.4);
+    background: rgba(237,28,36,.12);
+  }
 </style>
 </head>
 <body>
@@ -332,6 +472,69 @@
     <span style="font-family:'Material Symbols Outlined';font-size:18px">play_arrow</span>
     Launch App
   </a>
+</section>
+
+<section class="live-panel">
+  <div class="live-shell">
+    <div class="live-header">
+      <div>
+        <div class="live-kicker">
+          <span style="font-family:'Material Symbols Outlined';font-size:14px">dns</span>
+          Live backend connection
+        </div>
+        <h2 class="live-title" id="live-user-title">Connecting to the API...</h2>
+        <p class="live-copy" id="live-user-copy">The frontend will pull a demo account from FastAPI and hydrate these stats in real time.</p>
+      </div>
+      <div class="live-status" id="live-status">
+        <span class="live-status-dot"></span>
+        <span>Checking backend</span>
+      </div>
+    </div>
+
+    <div class="live-grid">
+      <div class="live-stat">
+        <div class="live-stat-label">Portfolio value</div>
+        <div class="live-stat-value" id="live-market-value">--</div>
+        <div class="live-stat-note" id="live-portfolio-note">Waiting for backend response.</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat-label">XP and level</div>
+        <div class="live-stat-value" id="live-xp-value">--</div>
+        <div class="live-stat-note" id="live-xp-note">Total XP and derived level.</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat-label">Streak</div>
+        <div class="live-stat-value" id="live-streak-value">--</div>
+        <div class="live-stat-note" id="live-streak-note">Habit momentum from the habits router.</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat-label">KYC + goal</div>
+        <div class="live-stat-value" id="live-kyc-value">--</div>
+        <div class="live-stat-note" id="live-goal-note">Goal and verification state from the onboarding flow.</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat-label">Rewards and habits</div>
+        <div class="live-stat-value" id="live-activity-value">--</div>
+        <div class="live-stat-note" id="live-activity-note">Reward catalog, habit totals, and today's completions.</div>
+      </div>
+      <div class="live-stat">
+        <div class="live-stat-label">Roundups invested</div>
+        <div class="live-stat-value" id="live-roundup-value">--</div>
+        <div class="live-stat-note" id="live-roundup-note">Spare-change activity from the roundups endpoint.</div>
+      </div>
+    </div>
+
+    <div class="live-actions">
+      <a href="http://localhost:8000/docs" target="_blank" rel="noreferrer" class="live-action">
+        <span style="font-family:'Material Symbols Outlined';font-size:18px">description</span>
+        Open API docs
+      </a>
+      <button type="button" id="live-refresh" class="live-action" style="cursor:pointer">
+        <span style="font-family:'Material Symbols Outlined';font-size:18px">refresh</span>
+        Refresh live data
+      </button>
+    </div>
+  </div>
 </section>
 
 <!-- ══════════════════ SCREENS GRID ══════════════════ -->
@@ -691,9 +894,78 @@
   Scotia FutureFlex · CaseHacks 3D Design System · 2025
 </footer>
 
+<script src="./api-client.js"></script>
 <script>
 (function () {
   'use strict';
+
+  const api = window.FutureFlexAPI;
+  const liveStatus = document.getElementById('live-status');
+  const liveTitle = document.getElementById('live-user-title');
+  const liveCopy = document.getElementById('live-user-copy');
+  const liveMarketValue = document.getElementById('live-market-value');
+  const livePortfolioNote = document.getElementById('live-portfolio-note');
+  const liveXpValue = document.getElementById('live-xp-value');
+  const liveXpNote = document.getElementById('live-xp-note');
+  const liveStreakValue = document.getElementById('live-streak-value');
+  const liveStreakNote = document.getElementById('live-streak-note');
+  const liveKycValue = document.getElementById('live-kyc-value');
+  const liveGoalNote = document.getElementById('live-goal-note');
+  const liveActivityValue = document.getElementById('live-activity-value');
+  const liveActivityNote = document.getElementById('live-activity-note');
+  const liveRoundupValue = document.getElementById('live-roundup-value');
+  const liveRoundupNote = document.getElementById('live-roundup-note');
+  const liveRefresh = document.getElementById('live-refresh');
+
+  function formatCurrency(value) {
+    return new Intl.NumberFormat('en-CA', {
+      style: 'currency',
+      currency: 'CAD',
+      maximumFractionDigits: 2,
+    }).format(value || 0);
+  }
+
+  function setStatus(text, connected) {
+    liveStatus.innerHTML = `
+      <span class="live-status-dot" style="background:${connected ? '#6ee7b7' : '#fca5a5'};box-shadow:0 0 0 4px ${connected ? 'rgba(110,231,183,.15)' : 'rgba(252,165,165,.15)'}"></span>
+      <span>${text}</span>
+    `;
+  }
+
+  async function loadLiveData() {
+    try {
+      setStatus(`Connecting to ${api.baseUrl}`, false);
+      const user = await api.resolveDemoUser();
+      const dashboard = await api.getDashboard(user.id);
+
+      liveTitle.textContent = `${dashboard.name}'s live account`;
+      liveCopy.textContent = `Backend user ${dashboard.user_id} is synced with the FastAPI data model. Goal: ${dashboard.goal || 'not set'}.`;
+      liveMarketValue.textContent = formatCurrency(dashboard.market_value);
+      livePortfolioNote.textContent = `Balance ${formatCurrency(dashboard.balance)} · Invested ${formatCurrency(dashboard.total_invested)}`;
+      liveXpValue.textContent = `${dashboard.total_xp} XP · Lv ${dashboard.level}`;
+      liveXpNote.textContent = `${dashboard.active_rewards} active rewards in the catalog.`;
+      liveStreakValue.textContent = `${dashboard.current_streak} days`;
+      liveStreakNote.textContent = `Longest streak ${dashboard.longest_streak} days.`;
+      liveKycValue.textContent = `${dashboard.kyc_status}`;
+      liveGoalNote.textContent = `Goal: ${dashboard.goal || 'none'} · KYC ${dashboard.kyc_verified ? 'verified' : 'pending'}.`;
+      liveActivityValue.textContent = `${dashboard.habits_today_completed}/${dashboard.habits_total}`;
+      liveActivityNote.textContent = `${dashboard.habits_total} active habits · ${dashboard.active_rewards} rewards.`;
+      liveRoundupValue.textContent = formatCurrency(dashboard.roundup_total);
+      liveRoundupNote.textContent = `Portfolio market value ${formatCurrency(dashboard.market_value)}.`;
+      setStatus('Connected to the FastAPI backend', true);
+    } catch (error) {
+      liveTitle.textContent = 'Backend connection unavailable';
+      liveCopy.textContent = 'Start the FastAPI server on port 8000, then refresh this page to load live data.';
+      liveMarketValue.textContent = '--';
+      livePortfolioNote.textContent = error.message;
+      liveXpValue.textContent = '--';
+      liveStreakValue.textContent = '--';
+      liveKycValue.textContent = '--';
+      liveActivityValue.textContent = '--';
+      liveRoundupValue.textContent = '--';
+      setStatus('Backend offline', false);
+    }
+  }
 
   /* ── Cursor ── */
   const cur = document.getElementById('sf-cursor');
@@ -786,6 +1058,9 @@
       }
     });
   });
+
+  liveRefresh.addEventListener('click', loadLiveData);
+  loadLiveData();
 
 })();
 </script>

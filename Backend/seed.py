@@ -33,10 +33,18 @@ def seed():
             name="Alex Chen",
             email="alex@demo.com",
             goal="first_home",       # saving toward a first home purchase
+            goal_target_amount=50000.0,
             kyc_verified=True,
         )
         db.add(alex)
         db.flush()   # flush so alex.id is populated before we reference it
+
+        goal = models.InvestmentGoal(
+            user_id=alex.id,
+            goal="first_home",
+            target_amount=50000.0,
+        )
+        db.add(goal)
 
         # ---------------------------------------------------------------
         # 2. Portfolio

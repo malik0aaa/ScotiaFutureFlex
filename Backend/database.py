@@ -3,13 +3,15 @@ database.py — SQLAlchemy engine, session factory, and Base class.
 Every other file imports from here.
 """
 
+from pathlib import Path
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# SQLite file will be created in the same directory as main.py.
-# The three slashes mean a relative path: ./scotia.db
-DATABASE_URL = "sqlite:///./scotia.db"
+# SQLite file lives next to this module so the app always uses the same file
+# regardless of the current working directory.
+DATABASE_URL = f"sqlite:///{(Path(__file__).resolve().parent / 'scotia.db').as_posix()}"
 
 # The engine is the low-level connection to the database.
 # check_same_thread=False is required for SQLite when used with FastAPI

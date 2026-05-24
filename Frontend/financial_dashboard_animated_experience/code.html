@@ -171,6 +171,12 @@
         .stagger-2 { animation-delay: 0.2s; }
         .stagger-3 { animation-delay: 0.3s; }
         .stagger-4 { animation-delay: 0.4s; }
+        .goal-carousel {
+          scroll-snap-type: x mandatory;
+        }
+        .goal-carousel > * {
+          scroll-snap-align: start;
+        }
     </style>
 </head>
 <body class="flex justify-center items-start min-h-screen text-text-primary">
@@ -288,54 +294,165 @@
 </section>
 <!-- Investment Goals -->
 <section class="space-y-md mt-xl animate-slide-up-fade stagger-3">
-<div class="flex justify-between items-end px-xs">
-<h3 class="font-headline-card text-headline-card">Investment Goals</h3>
-<span class="text-scotia-red-bright font-label-cta text-label-cta cursor-pointer active:opacity-60 transition-opacity">Edit</span>
-</div>
-<div class="flex gap-md overflow-x-auto no-scrollbar pb-2 px-xs">
-<!-- Goal Card: First Home -->
+  <div class="flex justify-between items-end px-xs">
+    <h3 class="font-headline-card text-headline-card">Investment Goals</h3>
+    <span id="goals-edit-btn" class="text-scotia-red-bright font-label-cta text-label-cta cursor-pointer active:opacity-60 transition-opacity" role="button" tabindex="0" aria-label="Edit investment goals">Edit</span>
+  </div>
+
+  <div id="goals-container" class="goal-carousel flex gap-md overflow-x-auto no-scrollbar pb-2 px-xs">
+    <!-- Dynamic goal cards will be injected here -->
+  </div>
+
+  <script src="../api-client.js"></script>
+
+  <script>
+    (function(){
+      let currentUser = null;
+      const map = {
+        therapy_fund: { title: 'Therapy Fund', icon: 'spa', saved: '$2,000', target: '$10k goal', progress: 20 },
+        quit_my_job_fund: { title: 'Quit My Job Fund', icon: 'work_off', saved: '$12,000', target: '$25k goal', progress: 48 },
+        avocado_toast_retirement: { title: 'Avocado Toast Retirement', icon: 'brunch_dining', saved: '$8,400', target: '$100k goal', progress: 8 },
+        student_loan_speedrun: { title: 'Student Loan Speedrun', icon: 'school', saved: '$5,200', target: '$30k goal', progress: 17 },
+        elden_ring_pc_setup: { title: 'Elden Ring PC Setup', icon: 'sports_esports', saved: '$1,600', target: '$4k goal', progress: 40 },
+        crypto_losses_recovery: { title: 'Crypto Losses Recovery', icon: 'candlestick_chart', saved: '$600', target: '$15k goal', progress: 4 }
+      };
+
+      const goalOptions = [
+        { key: 'therapy_fund', label: 'Therapy Fund' },
+        { key: 'quit_my_job_fund', label: 'Quit My Job Fund' },
+        { key: 'avocado_toast_retirement', label: 'Avocado Toast Retirement' },
+        { key: 'student_loan_speedrun', label: 'Student Loan Speedrun' },
+        { key: 'elden_ring_pc_setup', label: 'Elden Ring PC Setup' },
+        { key: 'crypto_losses_recovery', label: 'Crypto Losses Recovery' }
+      ];
+
+      const goalsEditBtn = document.getElementById('goals-edit-btn');
+
+      function formatMoney(value) {
+        const amount = Number(value);
+        if (!Number.isFinite(amount)) {
+          return '';
+        }
+        return new Intl.NumberFormat('en-CA', {
+          style: 'currency',
+          currency: 'CAD',
+          maximumFractionDigits: 0,
+        }).format(amount);
+      }
+
+      function openGoalEditorPage() {
+        window.location.href = '../goal_editor/code.html';
+      }
+
+      async function render() {
+        try {
+          const demo = await window.FutureFlexAPI.resolveDemoUser();
+          const user = await window.FutureFlexAPI.getUser(demo.id);
+          currentUser = user;
+          let goalRecords = [];
+          try {
+            const response = await window.FutureFlexAPI.getGoals(user.id);
+            goalRecords = response.goals || [];
+          } catch (error) {
+            goalRecords = [];
+          }
+          const container = document.getElementById('goals-container');
+          container.innerHTML = '';
+
+          if (goalRecords.length > 0) {
+            goalRecords.forEach((goalRecord, index) => {
+              const meta = map[goalRecord.goal] || { title: goalRecord.goal, icon: 'flag', saved: 'New goal', target: '', progress: 0 };
+              const targetLabel = goalRecord.target_amount ? formatMoney(goalRecord.target_amount) : meta.target;
+              const card = document.createElement('div');
+              card.className = 'flex-shrink-0 w-64 bg-white border border-gray-200 rounded-xl p-md shadow-sm hover:border-scotia-red-bright/30 transition-colors';
+              card.style.animationDelay = `${Math.min(index * 80, 320)}ms`;
+              card.innerHTML = `
+                <div class="flex items-start justify-between gap-3 mb-md">
+                  <div class="w-11 h-11 rounded-full bg-red-50 flex items-center justify-center text-scotia-red-bright shrink-0">
+                    <span class="material-symbols-outlined">${meta.icon}</span>
+                  </div>
+                  <div class="text-right">
+                    <p class="font-label-micro text-text-muted uppercase tracking-wide">Goal ${index + 1}</p>
+                    <p class="font-label-micro text-scotia-red-bright">${goalRecord.created_at ? new Date(goalRecord.created_at).toLocaleDateString('en-CA', { month: 'short', day: 'numeric' }) : 'Recent'}</p>
+                  </div>
+                </div>
+                <p class="font-label-cta text-label-cta text-text-primary mb-1">${meta.title}</p>
+                <div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
+                  <div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: ${Math.max(12, Math.min(100, meta.progress))}%"></div>
+                </div>
+                <div class="flex justify-between items-center gap-2">
+                  <p class="font-label-micro text-text-muted truncate">${meta.saved}</p>
+                  <p class="font-label-micro font-bold text-text-primary truncate">${targetLabel || 'No target set'}</p>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+          } else {
+            // No user goal yet — render the original three static cards to keep formatting
+            const staticHTML = `
 <div class="flex-shrink-0 w-48 bg-white border border-gray-200 rounded-xl p-md shadow-sm hover:border-scotia-red-bright/30 transition-colors">
-<div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-scotia-red-bright mb-md">
-<span class="material-symbols-outlined">home</span>
+  <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-scotia-red-bright mb-md">
+    <span class="material-symbols-outlined">home</span>
+  </div>
+  <p class="font-label-cta text-label-cta text-text-primary mb-1">First Home</p>
+  <div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
+    <div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: 65%"></div>
+  </div>
+  <div class="flex justify-between items-center">
+    <p class="font-label-micro text-text-muted">$32,500</p>
+    <p class="font-label-micro font-bold text-text-primary">$50k goal</p>
+  </div>
 </div>
-<p class="font-label-cta text-label-cta text-text-primary mb-1">First Home</p>
-<div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
-<div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: 65%"></div>
-</div>
-<div class="flex justify-between items-center">
-<p class="font-label-micro text-text-muted">$32,500</p>
-<p class="font-label-micro font-bold text-text-primary">$50k goal</p>
-</div>
-</div>
-<!-- Goal Card: Dream Vacation -->
 <div class="flex-shrink-0 w-48 bg-white border border-gray-200 rounded-xl p-md shadow-sm hover:border-scotia-red-bright/30 transition-colors">
-<div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-secondary mb-md">
-<span class="material-symbols-outlined">flight_takeoff</span>
+  <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-secondary mb-md">
+    <span class="material-symbols-outlined">flight_takeoff</span>
+  </div>
+  <p class="font-label-cta text-label-cta text-text-primary mb-1">Dream Vacation</p>
+  <div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
+    <div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: 40%"></div>
+  </div>
+  <div class="flex justify-between items-center">
+    <p class="font-label-micro text-text-muted">$4,000</p>
+    <p class="font-label-micro font-bold text-text-primary">$10k goal</p>
+  </div>
 </div>
-<p class="font-label-cta text-label-cta text-text-primary mb-1">Dream Vacation</p>
-<div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
-<div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: 40%"></div>
-</div>
-<div class="flex justify-between items-center">
-<p class="font-label-micro text-text-muted">$4,000</p>
-<p class="font-label-micro font-bold text-text-primary">$10k goal</p>
-</div>
-</div>
-<!-- Goal Card: Retirement Fund -->
 <div class="flex-shrink-0 w-48 bg-white border border-gray-200 rounded-xl p-md shadow-sm hover:border-scotia-red-bright/30 transition-colors">
-<div class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-tertiary mb-md">
-<span class="material-symbols-outlined">park</span>
+  <div class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-tertiary mb-md">
+    <span class="material-symbols-outlined">park</span>
+  </div>
+  <p class="font-label-cta text-label-cta text-text-primary mb-1">Retirement Fund</p>
+  <div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
+    <div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: 15%"></div>
+  </div>
+  <div class="flex justify-between items-center">
+    <p class="font-label-micro text-text-muted">$75,000</p>
+    <p class="font-label-micro font-bold text-text-primary">$500k goal</p>
+  </div>
 </div>
-<p class="font-label-cta text-label-cta text-text-primary mb-1">Retirement Fund</p>
-<div class="w-full bg-gray-100 h-1.5 rounded-full mb-2 overflow-hidden">
-<div class="bg-scotia-red-bright h-full rounded-full animate-progress" style="--progress-width: 15%"></div>
-</div>
-<div class="flex justify-between items-center">
-<p class="font-label-micro text-text-muted">$75,000</p>
-<p class="font-label-micro font-bold text-text-primary">$500k goal</p>
-</div>
-</div>
-</div>
+            `;
+            container.innerHTML = staticHTML + `<div class="flex items-center pl-4"><button id="add-goal" class="px-3 py-1 bg-scotia-red-bright text-white rounded">Add a goal</button></div>`;
+            container.querySelector('#add-goal').addEventListener('click', openGoalEditorPage);
+          }
+        } catch (err) {
+          console.error('Failed to load goals', err);
+        }
+      }
+      if (goalsEditBtn) {
+        goalsEditBtn.onclick = function () {
+          openGoalEditorPage();
+        };
+        goalsEditBtn.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openGoalEditorPage();
+          }
+        });
+      }
+
+      // Initial render
+      render();
+    })();
+  </script>
 </section>
 <!-- Credit Cards Section -->
 <section class="space-y-md animate-slide-up-fade stagger-4">

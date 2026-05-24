@@ -34,15 +34,24 @@ def set_goal(body: schemas.GoalSet, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # Persist the chosen goal on the user record
+    goal_row = models.InvestmentGoal(
+        user_id=body.user_id,
+        goal=body.goal,
+        target_amount=body.target_amount,
+    )
+    db.add(goal_row)
+
+    # Persist the chosen goal on the user record for legacy screens.
     user.goal = body.goal
+    user.goal_target_amount = body.target_amount
     db.commit()
-    db.refresh(user)   # reload from DB to get any server-set fields
+    db.refresh(goal_row)
 
     return schemas.GoalOut(
         user_id=user.id,
-        goal=user.goal,
-        message=f"Goal set to '{user.goal}'. Let's start building your future!",
+        goal=goal_row.goal,
+        target_amount=goal_row.target_amount,
+        message=f"Goal set to '{goal_row.goal}'. Let's start building your future!",
     )
 
 

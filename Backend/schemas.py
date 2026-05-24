@@ -35,8 +35,47 @@ class UserOut(ORMBase):
     name:         str
     email:        str
     goal:         Optional[str]
+    goal_target_amount: Optional[float]
     kyc_verified: bool
     created_at:   datetime
+
+
+class GoalRecord(ORMBase):
+    """Stored investment goal for a user."""
+    id:            int
+    user_id:       int
+    goal:          str
+    target_amount: Optional[float]
+    created_at:    datetime
+    updated_at:    Optional[datetime]
+
+
+class GoalList(ORMBase):
+    """All stored investment goals for a user."""
+    user_id: int
+    goals:   List[GoalRecord]
+
+
+class DashboardOut(ORMBase):
+    """Aggregated data for the frontend landing page and live dashboard cards."""
+    user_id:                int
+    name:                   str
+    goal:                   Optional[str]
+    goal_target_amount:     Optional[float]
+    kyc_verified:           bool
+    kyc_status:             str
+    balance:                float
+    total_invested:         float
+    market_value:           float
+    total_xp:               int
+    level:                  int
+    current_streak:         int
+    longest_streak:         int
+    active_rewards:         int
+    habits_today_completed: int
+    habits_total:           int
+    roundup_total:          float
+    updated_at:             Optional[datetime]
 
 
 # ===========================================================================
@@ -48,13 +87,21 @@ class GoalSet(BaseModel):
     user_id: int
     # e.g. "emergency_fund", "vacation", "first_home", "retirement"
     goal:    str
+    target_amount: Optional[float] = None
 
 
 class GoalOut(ORMBase):
     """Confirmation response after goal is saved."""
     user_id: int
     goal:    str
+    target_amount: Optional[float] = None
     message: str
+
+
+class GoalUpsert(BaseModel):
+    """Body for PUT /goals/{user_id} — update the user's current goal."""
+    goal:          str
+    target_amount: Optional[float] = None
 
 
 class DepositCreate(BaseModel):

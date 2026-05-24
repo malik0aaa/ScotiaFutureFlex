@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Scotia FutureFlex - Edit Goal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          'scotia-red-bright': '#ed1c24',
+          'scotia-red-dark': '#990000',
+          'surface-dim': '#e0e0e0',
+          'surface': '#ffffff',
+          'surface-container': '#f4f4f4',
+          'surface-container-low': '#f3f3f8',
+          'surface-container-lowest': '#ffffff',
+          'surface-bright': '#ffffff',
+          'text-primary': '#000000',
+          'text-muted': '#666666',
+          'secondary': '#1960a6',
+          'tertiary': '#534AB7',
+          'success-emerald': '#1D9E75',
+          'mintBg': '#E6F4F1',
+          'amberBg': '#FEF3E2',
+          'peachBg': '#FFF1E0'
+        },
+        borderRadius: {
+          DEFAULT: '0.25rem',
+          lg: '0.75rem',
+          xl: '1rem',
+          full: '9999px'
+        },
+        spacing: {
+          xs: '0.25rem',
+          sm: '0.5rem',
+          md: '0.75rem',
+          lg: '1rem',
+          xl: '1.5rem',
+          'gutter-mobile': '1.25rem'
+        },
+        fontFamily: {
+          sans: ['Clash Display', 'sans-serif'],
+          'headline-hero-mobile': ['Clash Display'],
+          'display-hero': ['Clash Display'],
+          'label-cta': ['Clash Display'],
+          'body-medium': ['Clash Display'],
+          'body-base': ['Clash Display'],
+          'headline-card': ['Clash Display'],
+          'title-section': ['Clash Display'],
+          'label-micro': ['Clash Display']
+        },
+        fontSize: {
+          'headline-hero-mobile': ['26px', { lineHeight: '30px', fontWeight: '600' }],
+          'display-hero': ['32px', { lineHeight: '36px', letterSpacing: '-0.01em', fontWeight: '600' }],
+          'label-cta': ['14px', { lineHeight: '18px', fontWeight: '600' }],
+          'body-medium': ['13px', { lineHeight: '18px', fontWeight: '500' }],
+          'body-base': ['12px', { lineHeight: '16px', fontWeight: '400' }],
+          'headline-card': ['24px', { lineHeight: '28px', fontWeight: '600' }],
+          'title-section': ['10px', { lineHeight: '14px', letterSpacing: '0.08em', fontWeight: '600' }],
+          'label-micro': ['10px', { lineHeight: '12px', letterSpacing: '0.02em', fontWeight: '400' }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+  }
+  .ios-notch {
+    width: 160px;
+    height: 30px;
+    background: #000;
+    margin: 0 auto;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+  }
+  body {
+    background-color: #F4F4F4;
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Clash Display', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .animate-slide-up-fade {
+    animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+  @keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body class="flex justify-center items-start min-h-screen text-text-primary">
+<div class="relative w-[375px] h-[812px] bg-background shadow-2xl overflow-hidden border-[8px] border-surface-dim rounded-[44px] my-8">
+  <div class="h-11 w-full relative z-50 bg-white/80 backdrop-blur-md">
+    <div class="ios-notch"></div>
+    <div class="flex justify-between items-center px-6 pt-3">
+      <span class="text-[14px] font-bold font-body-base">9:41</span>
+      <div class="flex gap-1.5 items-center">
+        <span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+        <span class="material-symbols-outlined text-[16px]">wifi</span>
+        <span class="material-symbols-outlined text-[16px]">battery_full</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="sticky top-0 w-full z-40 flex justify-between items-center px-gutter-mobile py-md bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="flex items-center gap-3">
+      <button id="back-btn" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-scotia-red-bright active:scale-95 transition-transform" aria-label="Back">
+        <span class="material-symbols-outlined text-[22px]">arrow_back</span>
+      </button>
+      <div class="flex flex-col">
+        <span class="font-headline-hero-mobile text-headline-hero-mobile font-bold text-scotia-red-bright leading-none">Scotia FutureFlex</span>
+        <span class="text-[11px] text-text-muted font-semibold uppercase tracking-[0.1em] mt-1">Edit goal</span>
+      </div>
+    </div>
+    <button class="material-symbols-outlined hover:bg-gray-100 p-1 rounded-full transition-colors active:scale-90 text-scotia-red-bright">help_outline</button>
+  </header>
+
+  <main class="overflow-y-auto h-[calc(812px-44px-72px)] no-scrollbar pb-10 bg-background">
+    <div class="px-gutter-mobile py-xl space-y-xl">
+      <section class="animate-slide-up-fade">
+        <h1 class="font-display-hero text-display-hero text-text-primary">Set your goal</h1>
+        <p id="user-copy" class="text-text-muted font-body-medium mt-2">Loading your profile...</p>
+      </section>
+
+      <section class="animate-slide-up-fade stagger-1">
+        <div class="bg-white rounded-[24px] p-xl shadow-sm border border-gray-100 space-y-lg">
+          <div>
+            <label for="goal-select" class="block text-[11px] font-bold text-secondary uppercase tracking-[0.12em] mb-2">Predefined goal</label>
+            <div class="relative">
+              <select id="goal-select" class="w-full appearance-none rounded-xl border border-gray-200 bg-white px-4 py-4 pr-11 text-[15px] font-semibold text-text-primary outline-none focus:border-scotia-red-bright focus:ring-2 focus:ring-scotia-red-bright/20"></select>
+              <span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-text-muted">expand_more</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="target-amount" class="block text-[11px] font-bold text-secondary uppercase tracking-[0.12em] mb-2">Target amount (CAD)</label>
+            <div class="rounded-xl border border-gray-200 bg-white px-4 py-4 focus-within:border-scotia-red-bright focus-within:ring-2 focus-within:ring-scotia-red-bright/20">
+              <input id="target-amount" type="number" min="1" step="1" placeholder="10000" class="w-full bg-transparent text-[15px] font-semibold text-text-primary outline-none placeholder:text-text-muted/50" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="animate-slide-up-fade stagger-2">
+        <div class="bg-[#990000] rounded-[24px] p-xl text-white shadow-lg overflow-hidden relative">
+          <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
+          <p class="font-title-section text-title-section uppercase tracking-widest opacity-80">Current selection</p>
+          <h2 id="preview-title" class="font-headline-card text-[28px] mt-1">Goal</h2>
+          <p id="preview-target" class="text-white/70 font-body-medium mt-2">Target amount: not set</p>
+        </div>
+      </section>
+
+      <section class="animate-slide-up-fade stagger-3 pb-4">
+        <div class="grid gap-3">
+          <button id="save-btn" class="w-full bg-scotia-red-bright hover:bg-scotia-red-dark text-white py-4 rounded-xl font-label-cta text-lg transition-all duration-200 active:scale-95 flex items-center justify-center gap-3 shadow-md">
+            <span class="material-symbols-outlined">save</span>
+            Save goal
+          </button>
+          <button id="cancel-btn" class="w-full bg-white hover:bg-gray-50 text-text-primary py-4 rounded-xl font-label-cta text-lg transition-all duration-200 active:scale-95 flex items-center justify-center gap-3 border border-gray-200 shadow-sm">
+            Cancel
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="../api-client.js"></script>
+<script>
+  (function () {
+    const goalOptions = [
+      { key: 'therapy_fund', label: 'Therapy Fund' },
+      { key: 'quit_my_job_fund', label: 'Quit My Job Fund' },
+      { key: 'avocado_toast_retirement', label: 'Avocado Toast Retirement' },
+      { key: 'student_loan_speedrun', label: 'Student Loan Speedrun' },
+      { key: 'elden_ring_pc_setup', label: 'Elden Ring PC Setup' },
+      { key: 'crypto_losses_recovery', label: 'Crypto Losses Recovery' },
+    ];
+
+    const goalSelect = document.getElementById('goal-select');
+    const targetAmount = document.getElementById('target-amount');
+    const previewTitle = document.getElementById('preview-title');
+    const previewTarget = document.getElementById('preview-target');
+    const userCopy = document.getElementById('user-copy');
+    const saveBtn = document.getElementById('save-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const backBtn = document.getElementById('back-btn');
+
+    let currentUser = null;
+
+    function formatMoney(value) {
+      const amount = Number(value);
+      if (!Number.isFinite(amount)) {
+        return 'not set';
+      }
+      return new Intl.NumberFormat('en-CA', {
+        style: 'currency',
+        currency: 'CAD',
+        maximumFractionDigits: 0,
+      }).format(amount);
+    }
+
+    function updatePreview() {
+      const selected = goalOptions.find((option) => option.key === goalSelect.value);
+      previewTitle.textContent = selected ? selected.label : 'Goal';
+      previewTarget.textContent = targetAmount.value
+        ? `Target amount: ${formatMoney(targetAmount.value)}`
+        : 'Target amount: not set';
+    }
+
+    goalOptions.forEach((option) => {
+      const item = document.createElement('option');
+      item.value = option.key;
+      item.textContent = option.label;
+      goalSelect.appendChild(item);
+    });
+
+    goalSelect.addEventListener('change', updatePreview);
+    targetAmount.addEventListener('input', updatePreview);
+
+    function goBack() {
+      window.location.href = '../financial_dashboard_animated_experience/code.html';
+    }
+
+    backBtn.addEventListener('click', goBack);
+    cancelBtn.addEventListener('click', goBack);
+
+      saveBtn.addEventListener('click', async () => {
+      if (!currentUser) {
+        return;
+      }
+
+      const amount = Number(targetAmount.value);
+      if (!Number.isFinite(amount) || amount <= 0) {
+        alert('Please enter a valid target amount.');
+        return;
+      }
+
+      try {
+          await window.FutureFlexAPI.updateGoal(currentUser.id, {
+          goal: goalSelect.value,
+          target_amount: amount,
+        });
+        goBack();
+      } catch (error) {
+        alert('Could not save goal: ' + error.message);
+      }
+    });
+
+    async function init() {
+      const demo = await window.FutureFlexAPI.resolveDemoUser();
+      currentUser = await window.FutureFlexAPI.getUser(demo.id);
+      userCopy.textContent = `Editing goal for ${currentUser.name} (${currentUser.email})`;
+        try {
+          const goalRecord = await window.FutureFlexAPI.getGoal(currentUser.id);
+          goalSelect.value = goalRecord.goal || goalOptions[0].key;
+          targetAmount.value = goalRecord.target_amount || '';
+        } catch (error) {
+          goalSelect.value = goalOptions[0].key;
+          targetAmount.value = '';
+        }
+      updatePreview();
+    }
+
+    init().catch((error) => {
+      console.error(error);
+      userCopy.textContent = 'Unable to load profile.';
+    });
+  })();
+</script>
+</body>
+</html>

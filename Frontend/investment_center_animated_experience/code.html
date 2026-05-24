@@ -343,7 +343,8 @@
 </section>
 <!-- CTA Section -->
 <section class="space-y-4 pb-12 reveal-on-scroll">
-<button class="w-full py-4 bg-scotia-red-bright text-white font-label-cta text-[16px] rounded-xl hover:bg-scotia-red-dark transition-all active:scale-95 shadow-lg shadow-scotia-red-bright/20" onclick="window.location.href='{{DATA:SCREEN:SCREEN_37}}'">
+<button class="w-full py-4 bg-scotia-red-bright text-white font-label-cta text-[16px] rounded-xl hover:bg-scotia-red-dark transition-all active:scale-95 shadow-lg shadow-scotia-red-bright/20"
+    onclick="(function(){const t='{{DATA:SCREEN:SCREEN_37}}'; if (typeof t==='string' && !t.includes('{{')) { window.location.href = t; } else { console.warn('Unresolved navigation target', t); } })()">
                         Invest $<span id="button-amount">50</span> now
                     </button>
 <div class="text-center space-y-1">

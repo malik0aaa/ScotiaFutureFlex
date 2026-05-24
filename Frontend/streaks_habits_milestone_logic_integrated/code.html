@@ -160,10 +160,10 @@
 <div class="space-y-3">
 <div class="flex justify-between items-end">
 <span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Experience Points</span>
-<span class="font-display font-bold">870 <span class="text-xs opacity-60">/ 1000 XP</span></span>
+<span class="font-display font-bold" id="xp-summary">870 <span class="text-xs opacity-60">/ 1000 XP</span></span>
 </div>
 <div class="h-2 w-full bg-white/20 rounded-full overflow-hidden">
-<div class="h-full bg-white rounded-full animate-progress" style="--progress-width: 87%"></div>
+<div class="h-full bg-white rounded-full animate-progress" id="xp-progress" style="--progress-width: 87%"></div>
 </div>
 </div>
 </div>
@@ -172,7 +172,7 @@
 <section class="animate-slide-up-fade stagger-1 space-y-md">
 <div class="flex justify-between items-end px-xs">
 <h3 class="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Weekly Streak</h3>
-<span class="text-scotia-red-bright font-bold flex items-center gap-1 text-sm">
+<span class="text-scotia-red-bright font-bold flex items-center gap-1 text-sm" id="weekly-streak-summary">
 <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
                             3 Days
                         </span>
@@ -261,7 +261,7 @@
 <div class="px-xs">
 <h3 class="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Today's Habits</h3>
 </div>
-<div class="space-y-3">
+<div class="space-y-3" id="habits-container">
 <!-- Habit Item 1 (Completed) -->
 <div class="flex items-center justify-between p-lg bg-white rounded-card border border-gray-200 shadow-sm opacity-60">
 <div class="flex items-center gap-4">
@@ -386,8 +386,97 @@
 </style>
 <div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
 <div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Streaks &amp; Habits</div></div>
+<script src="../api-client.js"></script>
 <script>
 (function(){
+var api = window.FutureFlexAPI;
+var xpSummary = document.getElementById('xp-summary');
+var xpProgress = document.getElementById('xp-progress');
+var weeklyStreakSummary = document.getElementById('weekly-streak-summary');
+var habitsContainer = document.getElementById('habits-container');
+var currentUserId = null;
+
+function iconForHabit(name) {
+    var lower = name.toLowerCase();
+    if (lower.indexOf('portfolio') !== -1) return 'visibility';
+    if (lower.indexOf('round-up') !== -1) return 'savings';
+    if (lower.indexOf('money tip') !== -1 || lower.indexOf('finance') !== -1) return 'menu_book';
+    if (lower.indexOf('transfer') !== -1) return 'sync_alt';
+    return 'check_circle';
+}
+
+function renderHabits(habits) {
+    habitsContainer.innerHTML = habits.map(function(habit) {
+        if (habit.completed_today) {
+            return `
+                <div class="flex items-center justify-between p-lg bg-white rounded-card border border-gray-200 shadow-sm opacity-60">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-success-emerald">
+                            <span class="material-symbols-outlined">${iconForHabit(habit.name)}</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">${habit.name}</p>
+                            <p class="text-[10px] text-text-muted">Done today • +${habit.xp_reward} XP earned</p>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-success-emerald">check_circle</span>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="flex items-center justify-between p-lg bg-white rounded-card border border-gray-200 shadow-sm transition-all hover:border-scotia-red-bright/30 group">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-scotia-red-bright/10 group-hover:text-scotia-red-bright transition-colors">
+                        <span class="material-symbols-outlined">${iconForHabit(habit.name)}</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">${habit.name}</p>
+                        <p class="text-[10px] text-scotia-red-bright font-bold uppercase tracking-wider">+${habit.xp_reward} XP reward</p>
+                    </div>
+                </div>
+                <button data-habit-id="${habit.id}" class="habit-btn bg-scotia-red-bright text-white text-[10px] font-bold py-2 px-4 rounded-full shadow-sm active:scale-95 transition-all">Mark done</button>
+            </div>
+        `;
+    }).join('');
+
+    document.querySelectorAll('.habit-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            if (!currentUserId) {
+                return;
+            }
+
+            var habitId = this.getAttribute('data-habit-id');
+            api.request(`/habits/${habitId}/complete/${currentUserId}`, { method: 'POST' })
+                .then(function() { return loadHabits(); })
+                .catch(function() {
+                    btn.classList.add('shake');
+                    setTimeout(function() { btn.classList.remove('shake'); }, 500);
+                });
+        });
+    });
+}
+
+function updateSummary(dashboard) {
+    xpSummary.innerHTML = dashboard.total_xp + ' <span class="text-xs opacity-60">/ 1000 XP</span>';
+    xpProgress.style.setProperty('--progress-width', Math.min((dashboard.total_xp / 1000) * 100, 100) + '%');
+    weeklyStreakSummary.innerHTML = '<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: \'FILL\' 1;">bolt</span>' + dashboard.current_streak + ' Days';
+}
+
+function loadHabits() {
+    return api.resolveDemoUser()
+        .then(function(user) {
+            currentUserId = user.id;
+            return Promise.all([api.getDashboard(user.id), api.getHabitsToday(user.id)]);
+        })
+        .then(function(results) {
+            var dashboard = results[0];
+            var habitList = results[1];
+            updateSummary(dashboard);
+            renderHabits(habitList.habits);
+        });
+}
+
 var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
 var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
@@ -427,6 +516,10 @@ document.querySelectorAll('nav button, [class*="nav"] button').forEach(function(
   if(t.includes('Rewards'))btn.onclick=function(){sfNav('../rewards_store_refined_format/code.html')};
   if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
   if(t.includes('Invest'))btn.onclick=function(){sfNav('../investment_center_animated_experience/code.html')};
+});
+
+loadHabits().catch(function(){
+    weeklyStreakSummary.innerHTML = '<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: \'FILL\' 1;">bolt</span>Backend offline';
 });
 })();
 </script>

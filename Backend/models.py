@@ -25,6 +25,8 @@ class User(Base):
     email         = Column(String, unique=True, index=True, nullable=False)
     # Investment goal chosen during onboarding: e.g. "emergency_fund", "vacation"
     goal          = Column(String, nullable=True)
+    # Optional user-set target amount for the chosen goal.
+    goal_target_amount = Column(Float, nullable=True)
     # KYC = Know Your Customer. True once the user has passed identity checks.
     kyc_verified  = Column(Boolean, default=False)
     created_at    = Column(DateTime(timezone=True), server_default=func.now())
@@ -39,10 +41,28 @@ class User(Base):
     user_rewards  = relationship("UserReward", back_populates="user")
     # One user → many habit completions
     habit_completions = relationship("HabitCompletion", back_populates="user")
+    # One user → many investment goal records
+    investment_goals = relationship("InvestmentGoal", back_populates="user")
 
 
 # ---------------------------------------------------------------------------
-# 2. Portfolio
+# 2. InvestmentGoal
+# ---------------------------------------------------------------------------
+class InvestmentGoal(Base):
+    __tablename__ = "investment_goals"
+
+    id            = Column(Integer, primary_key=True, index=True)
+    user_id       = Column(Integer, ForeignKey("users.id"), nullable=False)
+    goal          = Column(String, nullable=False)
+    target_amount = Column(Float, nullable=True)
+    created_at    = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at    = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
+
+    user = relationship("User", back_populates="investment_goals")
+
+
+# ---------------------------------------------------------------------------
+# 3. Portfolio
 # ---------------------------------------------------------------------------
 class Portfolio(Base):
     __tablename__ = "portfolios"
