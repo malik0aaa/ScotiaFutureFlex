@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Instant Starter Portfolio - Scotia FutureFlex</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Clash Display Font (via Fontshare) -->
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            scotiaRed: '#D1001C',
+            lightGray: '#F3F4F6',
+          },
+          fontFamily: {
+            clash: ['Clash Display', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+<style data-purpose="typography">
+    /* Applying Clash Display to headings as requested */
+    .font-clash {
+      font-family: 'Clash Display', sans-serif;
+    }
+    
+    /* Specific styling for the italicized serif-like feel of the original title */
+    .title-serif {
+      font-family: 'Clash Display', sans-serif;
+      font-weight: 600;
+      font-style: italic;
+    }
+  </style>
+<style data-purpose="layout">
+    /* Ensuring the content fits nicely on a mobile screen */
+    body {
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .mobile-container {
+      width: 100%;
+      max-width: 430px; /* iPhone 14/15 Pro Max width */
+      background-color: white;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="antialiased">
+<!-- BEGIN: Mobile Screen Container -->
+<main class="mobile-container flex flex-col" data-purpose="app-container">
+<!-- BEGIN: Top Hero Section -->
+<section class="bg-scotiaRed p-8 pt-12 pb-16 text-white flex flex-col gap-6" data-purpose="hero-section">
+<!-- Brand Logo & Name -->
+<div class="flex items-center gap-3" data-purpose="branding">
+<div class="bg-white text-scotiaRed font-bold rounded-lg w-10 h-10 flex items-center justify-center text-xl shadow-sm">
+          S
+        </div>
+<span class="font-medium text-lg tracking-tight">Scotiabank</span>
+</div>
+<!-- Hero Text Content -->
+<div class="space-y-4" data-purpose="hero-content">
+<p class="text-[10px] font-semibold tracking-widest uppercase opacity-80">
+          NEW — FOR FIRST-TIME INVESTORS
+        </p>
+<h1 class="text-5xl leading-[1.1] font-clash italic font-semibold">
+          Instant Starter<br>Portfolio
+        </h1>
+<p class="text-sm font-light leading-relaxed max-w-[85%] opacity-90">
+          Invest spare change, build streaks, unlock rewards. Your money actually working.
+        </p>
+</div>
+<!-- Badge/CTA Extra -->
+<div class="inline-flex">
+<div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 flex items-center gap-2 text-xs font-medium" data-purpose="xp-badge">
+<span class="text-yellow-400">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M14.615 1.595a.75.75 0 01.359.852L12.972 9.75h4.778a.75.75 0 01.58 1.222l-8.25 11.25a.75.75 0 01-1.264-.834l1.734-7.138H5.25a.75.75 0 01-.58-1.222l8.25-11.25a.75.75 0 01.714-.263z" fill-rule="evenodd"></path>
+</svg>
+</span>
+          Earn XP every time you invest
+        </div>
+</div>
+</section>
+<!-- END: Top Hero Section -->
+<!-- BEGIN: Features & Stats Grid -->
+<section class="flex-grow bg-white -mt-6 rounded-t-[2.5rem] p-6 pt-10" data-purpose="stats-grid">
+<div class="grid grid-cols-2 gap-4">
+<!-- Stat Item 1 -->
+<div class="bg-lightGray p-6 rounded-2xl flex flex-col justify-between h-32" data-purpose="stat-card">
+<span class="text-3xl font-clash font-semibold text-gray-900">$0.43</span>
+<span class="text-[11px] text-gray-500 font-medium">avg. daily round-up</span>
+</div>
+<!-- Stat Item 2 -->
+<div class="bg-lightGray p-6 rounded-2xl flex flex-col justify-between h-32" data-purpose="stat-card">
+<span class="text-3xl font-clash font-semibold text-gray-900">60s</span>
+<span class="text-[11px] text-gray-500 font-medium">to first portfolio</span>
+</div>
+<!-- Stat Item 3 -->
+<div class="bg-lightGray p-6 rounded-2xl flex flex-col justify-between h-32" data-purpose="stat-card">
+<span class="text-3xl font-clash font-semibold text-gray-900">0.25%</span>
+<span class="text-[11px] text-gray-500 font-medium">annual fee</span>
+</div>
+<!-- Stat Item 4 -->
+<div class="bg-lightGray p-6 rounded-2xl flex flex-col justify-between h-32" data-purpose="stat-card">
+<span class="text-3xl font-clash font-semibold text-gray-900 uppercase">Tfsa</span>
+<span class="text-[11px] text-gray-500 font-medium">tax-free growth</span>
+</div>
+</div>
+</section>
+<!-- END: Features & Stats Grid -->
+<!-- BEGIN: Footer Actions -->
+<footer class="bg-white p-6 pb-12 space-y-4" data-purpose="footer-actions">
+<!-- Main CTA Button -->
+<button class="w-full bg-scotiaRed text-white font-medium py-5 rounded-2xl text-lg hover:bg-red-700 transition-colors active:scale-[0.98] duration-150" data-purpose="cta-button">
+        Start in 60 seconds — it's free
+      </button>
+<!-- Secondary Link -->
+<div class="text-center">
+<button class="text-gray-500 text-sm font-medium hover:text-gray-700 transition-colors">
+          Already investing? <span class="text-gray-900 border-b border-gray-900/20">Sign in</span>
+</button>
+</div>
+</footer>
+<!-- END: Footer Actions -->
+</main>
+<!-- END: Mobile Screen Container -->
+<!-- ─── ANIMATION LAYER ─── -->
+<style>
+*{cursor:none!important}
+#sf-cur{position:fixed;width:12px;height:12px;background:#D1001C;border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference}
+#sf-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(209,0,28,.4);border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+#sf-glow{position:fixed;width:120px;height:120px;background:radial-gradient(circle,rgba(209,0,28,.12),transparent 70%);border-radius:50%;pointer-events:none;z-index:999997;transform:translate(-50%,-50%)}
+#sf-ov{position:fixed;inset:0;background:#D1001C;z-index:99998;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:opacity .5s ease,transform .6s cubic-bezier(.76,0,.24,1)}
+.sf-logo{color:#fff;font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.02em;opacity:0;transform:translateY(8px);transition:all .4s ease .1s}
+.sf-sub{color:rgba(255,255,255,.6);font-family:'Clash Display',sans-serif;font-size:11px;opacity:0;transition:all .4s ease .2s}
+@keyframes sfRipple{to{transform:scale(20);opacity:0}}
+.sf-lift{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s!important}
+.sf-lift:hover{transform:translateY(-3px) scale(1.015)!important;box-shadow:0 12px 32px rgba(0,0,0,.14)!important}
+.sf-fade{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.sf-fade.sf-in{opacity:1;transform:none}
+/* Stat card hover */
+[data-purpose="stat-card"]:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 24px rgba(0,0,0,.1);transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s}
+</style>
+<div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
+<div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Instant Starter Portfolio</div></div>
+<script>
+(function(){
+var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
+var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+(function loop(){C.style.left=mx+'px';C.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;R.style.left=rx+'px';R.style.top=ry+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;G.style.left=gx+'px';G.style.top=gy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('button,a,[role=button],.cursor-pointer,input,select').forEach(function(el){
+  el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(209,0,28,.9)'});
+  el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(209,0,28,.4)'});
+});
+document.addEventListener('mousedown',function(){C.style.transform='translate(-50%,-50%) scale(.4)';R.style.transform='translate(-50%,-50%) scale(.8)'});
+document.addEventListener('mouseup',function(){C.style.transform='translate(-50%,-50%) scale(1)';R.style.transform='translate(-50%,-50%) scale(1)'});
+var OV=document.getElementById('sf-ov');
+var logo=OV.querySelector('.sf-logo'),sub=OV.querySelector('.sf-sub');
+setTimeout(function(){logo.style.opacity='1';logo.style.transform='translateY(0)';sub.style.opacity='1'},60);
+setTimeout(function(){OV.style.opacity='0';OV.style.transform='translateY(-100%)'},650);
+setTimeout(function(){OV.remove()},1200);
+setTimeout(function(){
+  var items=document.querySelectorAll('section,[data-purpose="hero-section"],[data-purpose="stats-grid"],[data-purpose="footer-actions"]');
+  items.forEach(function(el,i){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},700+i*120)});
+},120);
+document.querySelectorAll('button').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var rpl=document.createElement('span');
+    rpl.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.3);width:8px;height:8px;left:'+(e.offsetX-4)+'px;top:'+(e.offsetY-4)+'px;transform:scale(0);animation:sfRipple .5s ease forwards;pointer-events:none;';
+    if(getComputedStyle(this).position==='static')this.style.position='relative';
+    this.style.overflow='hidden';this.appendChild(rpl);setTimeout(function(){rpl.remove()},500);
+  });
+});
+function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
+/* Navigation */
+document.querySelectorAll('button').forEach(function(btn){
+  var t=btn.textContent.trim();
+  if(t.includes('Start in 60')||t.includes("it's free")||t.includes('free'))btn.onclick=function(){sfNav('../select_investment_type_standardized_format/code.html')};
+  if(t.includes('Sign in')||t.includes('sign in'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
+});
+})();
+</script>
+</body></html>

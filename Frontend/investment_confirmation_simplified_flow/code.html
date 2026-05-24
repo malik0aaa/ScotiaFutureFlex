@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Scotia FutureFlex - Investment Confirmation</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Clash Display Font -->
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "tertiary": "#003ec2",
+                  "surface-container-low": "#f3f3f8",
+                  "text-muted": "#666666",
+                  "inverse-on-surface": "#f0f0f5",
+                  "error": "#ba1a1a",
+                  "surface": "#ffffff",
+                  "inverse-primary": "#ffb4a8",
+                  "on-error": "#ffffff",
+                  "secondary-container": "#f0f0f0",
+                  "on-secondary-fixed-variant": "#004883",
+                  "surface-container": "#f4f4f4",
+                  "primary-container": "#ed1c24",
+                  "streak-gold": "#BA7517",
+                  "primary-fixed": "#ffdad4",
+                  "on-tertiary": "#ffffff",
+                  "outline": "#d1d1d1",
+                  "scotia-red-bright": "#ed1c24",
+                  "on-secondary-fixed": "#001c39",
+                  "tertiary-container": "#0052f9",
+                  "error-container": "#ffdad6",
+                  "scotia-red-dark": "#990000",
+                  "on-surface-variant": "#5e3f3a",
+                  "text-primary": "#000000",
+                  "on-tertiary-fixed": "#001551",
+                  "success-emerald": "#1D9E75",
+                  "secondary-fixed": "#d4e3ff",
+                  "surface-container-lowest": "#ffffff",
+                  "on-tertiary-container": "#dce1ff",
+                  "on-primary-fixed-variant": "#930000",
+                  "secondary": "#1960a6",
+                  "scene-purple": "#534AB7",
+                  "on-secondary-container": "#00447e",
+                  "on-primary-container": "#ffdad4",
+                  "surface-dim": "#e0e0e0",
+                  "secondary-fixed-dim": "#a4c9ff",
+                  "surface-variant": "#eeeeee",
+                  "surface-container-highest": "#e2e2e2",
+                  "on-primary-fixed": "#410000",
+                  "outline-variant": "#e8bdb6",
+                  "surface-container-high": "#f0f0f0",
+                  "surface-bright": "#ffffff",
+                  "primary-fixed-dim": "#ffb4a8",
+                  "on-primary": "#ffffff",
+                  "on-secondary": "#ffffff",
+                  "on-tertiary-fixed-variant": "#0039b4",
+                  "background": "#ffffff",
+                  "on-background": "#000000",
+                  "primary": "#ed1c24",
+                  "on-error-container": "#93000a",
+                  "surface-tint": "#ed1c24",
+                  "tertiary-fixed-dim": "#b7c4ff",
+                  "on-surface": "#000000",
+                  "tertiary-fixed": "#dce1ff",
+                  "inverse-surface": "#2e3034",
+                  "mintBg": "#E6F4F1",
+                  "amberBg": "#FEF3E2",
+                  "peachBg": "#FFF1E0",
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.75rem",
+                  "xl": "1rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "sm": "0.5rem",
+                  "xs": "0.25rem",
+                  "lg": "1rem",
+                  "safe-top": "28px",
+                  "md": "0.75rem",
+                  "xl": "1.5rem",
+                  "gutter-mobile": "1.25rem"
+          },
+          "fontFamily": {
+                  "clash": ['Clash Display', 'sans-serif'],
+                  "headline-hero-mobile": ["Clash Display"],
+                  "display-hero": ["Clash Display"],
+                  "label-cta": ["Clash Display"],
+                  "body-medium": ["Clash Display"],
+                  "body-base": ["Clash Display"],
+                  "headline-card": ["Clash Display"],
+                  "title-section": ["Clash Display"],
+                  "label-micro": ["Clash Display"]
+          },
+          "fontSize": {
+                  "headline-hero-mobile": ["26px", {"lineHeight": "30px", "fontWeight": "600"}],
+                  "display-hero": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                  "label-cta": ["14px", {"lineHeight": "18px", "fontWeight": "600"}],
+                  "body-medium": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                  "body-base": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                  "headline-card": ["24px", {"lineHeight": "28px", "fontWeight": "600"}],
+                  "title-section": ["10px", {"lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "600"}],
+                  "label-micro": ["10px", {"lineHeight": "12px", "letterSpacing": "0.02em", "fontWeight": "400"}]
+          }
+        },
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+    }
+    .ios-notch {
+        width: 160px;
+        height: 30px;
+        background: #000;
+        margin: 0 auto;
+        border-bottom-left-radius: 18px;
+        border-bottom-right-radius: 18px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+    }
+    body {
+        background-color: #F4F4F4;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Clash Display', sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Motion System */
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up-fade {
+        animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+    }
+
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body class="flex justify-center items-start min-h-screen text-text-primary">
+<!-- BEGIN: Mobile Device Container -->
+<div class="relative w-[375px] h-[812px] bg-background shadow-2xl overflow-hidden border-[8px] border-surface-dim rounded-[44px] my-8">
+<!-- iOS Status Bar & Notch -->
+<div class="h-11 w-full relative z-50 bg-white/80 backdrop-blur-md">
+<div class="ios-notch"></div>
+<div class="flex justify-between items-center px-6 pt-3">
+<span class="text-[14px] font-bold">9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">battery_full</span>
+</div>
+</div>
+</div>
+<!-- TopAppBar from SCREEN_44 -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-lg py-md bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdiUi0m7cB4WKcIXBLAcBxFDBeSU4DzoSfu72IQ16Zqx7pkkH1Q2JkocvlaRSwwha8rZbBBqkQ0mFO0_ra4pt17N6s72m5ZRWgKU9WG5kyaX17Jg82_DaoWPYhw7Mq6OCaWVdid493wZBVGjdQddV9-T_UCHpFLLWnGb6UFUsGVtL7uKG81yaWdfkuC7UlTfsyePSVKHFfwVa8cwzV1JN6R_ORtzE3xUBYCY38vR1x9IGZSe-0Zxo15i761fH0ZVrVwCekr2ev_Irp"/>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-hero-mobile text-headline-hero-mobile font-bold text-scotia-red-bright leading-none">Scotia FutureFlex</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-scotia-red-bright">
+<button class="material-symbols-outlined hover:bg-gray-100 p-1 rounded-full transition-colors active:scale-90">help_outline</button>
+<button class="material-symbols-outlined hover:bg-gray-100 p-1 rounded-full transition-colors active:scale-90">notifications</button>
+</div>
+</header>
+<!-- BEGIN: Main Content Area -->
+<main class="overflow-y-auto h-[calc(812px-44px-72px-80px)] no-scrollbar pb-12">
+<div class="px-gutter-mobile pt-8 space-y-xl">
+<!-- BEGIN: Success Message -->
+<div class="text-center animate-slide-up-fade" data-purpose="confirmation-header">
+<div class="inline-flex items-center justify-center w-20 h-20 bg-mintBg rounded-full mb-6 shadow-sm">
+<svg class="w-10 h-10 text-success-emerald" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<h1 class="font-display-hero text-display-hero mb-2">You're invested</h1>
+<p class="text-text-muted font-body-medium px-4 leading-tight">Your investment is now growing toward your emergency fund goal.</p>
+</div>
+<!-- END: Success Message -->
+<!-- BEGIN: Summary Table -->
+<div class="animate-slide-up-fade stagger-1" data-purpose="summary-details">
+<div class="border border-gray-100 rounded-2xl overflow-hidden shadow-sm bg-white">
+<!-- Row: Portfolio -->
+<div class="flex justify-between items-center p-4 border-b border-gray-50">
+<span class="font-label-cta text-text-muted">Portfolio</span>
+<span class="font-headline-card text-lg text-text-primary">Balanced Growth</span>
+</div>
+<!-- Row: Amount -->
+<!-- Row: Account -->
+<div class="flex justify-between items-center p-4 border-b border-gray-50">
+<span class="font-label-cta text-text-muted">Account</span>
+<span class="font-headline-card text-lg text-text-primary">TFSA Starter</span>
+</div>
+<!-- Row: Goal -->
+</div>
+</div>
+<!-- END: Summary Table -->
+<!-- BEGIN: Information Cards -->
+<div class="space-y-4 animate-slide-up-fade stagger-2">
+<!-- Mint Card: Round-up -->
+<div class="bg-mintBg p-5 rounded-2xl flex gap-4 border border-[#D5EBE7]" data-purpose="round-up-info">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-teal-700">cached</span>
+</div>
+<p class="text-teal-900 font-body-medium leading-snug">Round-up active — your next Tim Hortons purchase will be rounded up and invested automatically.</p>
+</div>
+<!-- Amber Card: XP Unlock -->
+<div class="bg-amberBg p-5 rounded-2xl border border-[#F5E6D0] flex justify-between items-start" data-purpose="xp-info">
+<div class="flex gap-4">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-orange-600" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div>
+<p class="text-orange-900 font-body-medium leading-snug">
+                First deposit complete! You earned XP and unlocked a streak.
+              </p>
+</div>
+</div>
+<span class="text-orange-900 font-bold text-xl ml-2 font-headline-card">+150 XP</span>
+</div>
+<!-- Peach Card: Verification -->
+<div class="bg-peachBg p-5 rounded-2xl border border-[#F5E1CC] flex gap-4" data-purpose="verification-info">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-amber-700">warning</span>
+</div>
+<p class="text-amber-900 font-body-medium leading-snug">Identity verification in progress — you can continue depositing while we verify. Withdrawals unlock once complete.</p>
+</div>
+</div>
+<!-- END: Information Cards -->
+<!-- CTA Button Area -->
+<div class="pt-4 animate-slide-up-fade stagger-3">
+<button class="w-full bg-scotia-red-bright hover:bg-scotia-red-dark text-white py-4 rounded-xl font-label-cta text-lg transition-all duration-200 active:scale-95 flex items-center justify-center gap-3 shadow-md">Return to Home <span class="material-symbols-outlined">home</span></button>
+</div>
+</div>
+</main>
+<!-- END: Main Content Area -->
+<!-- BottomNavBar from SCREEN_44 -->
+<nav class="absolute bottom-0 left-0 w-full z-50 flex justify-around items-center px-md pb-8 pt-sm bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red-bright transition-all duration-200 hover:-translate-y-0.5 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-micro text-label-micro">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red-bright transition-all duration-200 hover:-translate-y-0.5 active:scale-90">
+<span class="material-symbols-outlined">sync_alt</span>
+<span class="font-label-micro text-label-micro">Transfers</span>
+</button>
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red-bright transition-all duration-200 hover:-translate-y-0.5 active:scale-90">
+<span class="material-symbols-outlined">redeem</span>
+<span class="font-label-micro text-label-micro">Rewards</span>
+</button>
+<button class="flex flex-col items-center justify-center text-scotia-red-bright font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-label-micro text-label-micro">Invest</span>
+</button>
+</nav>
+</div>
+<!-- END: Mobile Device Container -->
+<!-- ─── ANIMATION LAYER ─── -->
+<style>
+*{cursor:none!important}
+#sf-cur{position:fixed;width:12px;height:12px;background:#ed1c24;border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference}
+#sf-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(29,158,117,.5);border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+#sf-glow{position:fixed;width:120px;height:120px;background:radial-gradient(circle,rgba(29,158,117,.15),transparent 70%);border-radius:50%;pointer-events:none;z-index:999997;transform:translate(-50%,-50%)}
+#sf-ov{position:fixed;inset:0;background:#1D9E75;z-index:99998;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:opacity .5s ease,transform .6s cubic-bezier(.76,0,.24,1)}
+.sf-logo{color:#fff;font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.02em;opacity:0;transform:translateY(8px);transition:all .4s ease .1s}
+.sf-sub{color:rgba(255,255,255,.6);font-family:'Clash Display',sans-serif;font-size:11px;opacity:0;transition:all .4s ease .2s}
+@keyframes sfRipple{to{transform:scale(20);opacity:0}}
+.sf-lift{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s!important}
+.sf-lift:hover{transform:translateY(-3px) scale(1.015)!important;box-shadow:0 12px 32px rgba(0,0,0,.14)!important}
+.sf-fade{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.sf-fade.sf-in{opacity:1;transform:none}
+</style>
+<div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
+<div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Investment Confirmed!</div></div>
+<script>
+(function(){
+var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
+var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+(function loop(){C.style.left=mx+'px';C.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;R.style.left=rx+'px';R.style.top=ry+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;G.style.left=gx+'px';G.style.top=gy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('button,a,[role=button],.cursor-pointer,input,select').forEach(function(el){
+  el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(29,158,117,.9)'});
+  el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(29,158,117,.5)'});
+});
+document.addEventListener('mousedown',function(){C.style.transform='translate(-50%,-50%) scale(.4)';R.style.transform='translate(-50%,-50%) scale(.8)'});
+document.addEventListener('mouseup',function(){C.style.transform='translate(-50%,-50%) scale(1)';R.style.transform='translate(-50%,-50%) scale(1)'});
+var OV=document.getElementById('sf-ov');
+var logo=OV.querySelector('.sf-logo'),sub=OV.querySelector('.sf-sub');
+setTimeout(function(){logo.style.opacity='1';logo.style.transform='translateY(0)';sub.style.opacity='1'},60);
+setTimeout(function(){OV.style.opacity='0';OV.style.transform='translateY(-100%)'},650);
+setTimeout(function(){OV.remove()},1200);
+setTimeout(function(){
+  var items=document.querySelectorAll('section,.rounded-xl,.rounded-2xl,[class*="stagger"],[class*="animate-slide"]');
+  items.forEach(function(el,i){if(!el.closest('#sf-ov')){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},750+i*70)}});
+},120);
+document.querySelectorAll('button').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var rpl=document.createElement('span');
+    rpl.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.3);width:8px;height:8px;left:'+(e.offsetX-4)+'px;top:'+(e.offsetY-4)+'px;transform:scale(0);animation:sfRipple .5s ease forwards;pointer-events:none;';
+    if(getComputedStyle(this).position==='static')this.style.position='relative';
+    this.style.overflow='hidden';this.appendChild(rpl);setTimeout(function(){rpl.remove()},500);
+  });
+});
+document.querySelectorAll('.rounded-xl,.rounded-2xl,.shadow-sm,.shadow-md,.shadow-lg').forEach(function(el){
+  if(el.children.length>0&&!el.matches('nav,header,#sf-ov *'))el.classList.add('sf-lift');
+});
+function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
+/* Navigation */
+document.querySelectorAll('button').forEach(function(btn){
+  var t=btn.textContent.trim();
+  if(t.includes('Home')||t.includes('Done')||t.includes('Back'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
+  if(t.includes('streak')||t.includes('Streak')||t.includes('habit'))btn.onclick=function(){sfNav('../streaks_habits_milestone_logic_integrated/code.html')};
+});
+document.querySelectorAll('nav button').forEach(function(btn){
+  var t=btn.textContent.trim();
+  if(t.includes('Home'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
+  if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
+  if(t.includes('Rewards'))btn.onclick=function(){sfNav('../rewards_store_refined_format/code.html')};
+});
+})();
+</script>
+</body></html>

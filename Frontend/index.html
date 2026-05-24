@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scotia FutureFlex — App</title>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #ed1c24;
+    --red-dark: #990000;
+    --red-deep: #cc0000;
+    --blue: #003ec2;
+    --gold: #BA7517;
+    --green: #1D9E75;
+    --purple: #534AB7;
+  }
+
+  /* ── Custom Cursor ── */
+  * { cursor: none !important; }
+  #sf-cursor {
+    position: fixed; width: 14px; height: 14px;
+    background: var(--red); border-radius: 50%;
+    pointer-events: none; z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width .15s, height .15s, opacity .15s;
+    mix-blend-mode: difference;
+  }
+  #sf-ring {
+    position: fixed; width: 42px; height: 42px;
+    border: 2px solid rgba(237,28,36,.45); border-radius: 50%;
+    pointer-events: none; z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width .3s ease, height .3s ease, border-color .3s;
+  }
+  #sf-glow {
+    position: fixed; width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(237,28,36,.12) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 99997;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ── Page Base ── */
+  html, body { min-height: 100vh; overflow-x: hidden; }
+  body {
+    background: #060608;
+    font-family: 'Clash Display', sans-serif;
+    color: #fff;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    padding: 80px 40px 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(237,28,36,.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(237,28,36,.35);
+    background: rgba(237,28,36,.08);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(255,255,255,.75);
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(16px);
+    animation: fadeUp .6s cubic-bezier(.16,1,.3,1) .1s forwards;
+  }
+  .hero-title {
+    font-size: clamp(42px, 7vw, 80px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp .7s cubic-bezier(.16,1,.3,1) .2s forwards;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 16px;
+    color: rgba(255,255,255,.5);
+    font-weight: 400;
+    letter-spacing: -.01em;
+    opacity: 0; transform: translateY(16px);
+    animation: fadeUp .6s cubic-bezier(.16,1,.3,1) .35s forwards;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 36px;
+    background: var(--red);
+    color: #fff; font-weight: 600; font-size: 15px;
+    padding: 14px 32px; border-radius: 999px;
+    border: none; text-decoration: none;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    opacity: 0; transform: translateY(16px);
+    animation: fadeUp .6s cubic-bezier(.16,1,.3,1) .45s forwards;
+  }
+  .hero-cta:hover { background: var(--red-deep); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(237,28,36,.35); }
+
+  /* ── Screen Grid ── */
+  .screens-label {
+    text-align: center;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(255,255,255,.3); font-weight: 600;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp .5s .55s forwards;
+  }
+  .grid-wrap {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  /* ── Phone Card ── */
+  .phone-card {
+    position: relative;
+    border-radius: 28px;
+    background: #0f0f13;
+    border: 1px solid rgba(255,255,255,.07);
+    overflow: hidden;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s;
+    transform-style: preserve-3d;
+    opacity: 0; transform: translateY(30px);
+  }
+  .phone-card.visible { opacity: 1; transform: translateY(0); }
+  .phone-card:hover {
+    border-color: rgba(237,28,36,.4);
+    box-shadow: 0 24px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(237,28,36,.15) inset;
+  }
+
+  /* Card inner link */
+  .card-link { display: block; text-decoration: none; color: inherit; }
+
+  /* Mini phone screen */
+  .phone-screen {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+    margin: 12px 12px 0;
+    border: 1px solid rgba(255,255,255,.05);
+  }
+  .phone-notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 80px; height: 18px;
+    background: #000; border-radius: 0 0 12px 12px; z-index: 10;
+  }
+  .phone-status {
+    position: absolute; top: 4px; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 14px; z-index: 9;
+    font-size: 9px; font-weight: 700; color: rgba(255,255,255,.7);
+  }
+
+  /* Screen Previews — unique per card */
+  .screen-preview { position: absolute; inset: 0; padding: 24px 16px 16px; }
+
+  /* ── Dashboard ── */
+  .prev-dashboard { background: linear-gradient(160deg, #1a0002 0%, #0a0a10 60%); }
+  .prev-dashboard .prev-balance { font-size: 26px; font-weight: 700; color: #fff; margin: 10px 0 4px; }
+  .prev-dashboard .prev-tag { font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.4); }
+  .prev-account { background: rgba(255,255,255,.05); border-radius: 10px; padding: 8px 10px; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+  .prev-account-dot { width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0; }
+  .prev-account-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,.85); }
+  .prev-account-val { font-size: 9px; font-weight: 700; color: #fff; margin-left: auto; }
+  .prev-progress-bar { height: 3px; background: rgba(255,255,255,.1); border-radius: 99px; margin-top: 4px; overflow: hidden; }
+  .prev-progress-fill { height: 100%; background: var(--red); border-radius: 99px; transition: width 1s ease .3s; }
+
+  /* ── Transfers ── */
+  .prev-transfers { background: linear-gradient(160deg, #050520 0%, #0a0a10 60%); }
+  .prev-action-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .prev-action-btn { flex: 1; background: rgba(237,28,36,.15); border: 1px solid rgba(237,28,36,.25); border-radius: 10px; padding: 10px 6px; text-align: center; font-size: 8px; font-weight: 600; color: rgba(255,255,255,.7); }
+  .prev-action-icon { font-size: 18px; margin-bottom: 4px; color: var(--red); }
+  .prev-recipient { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; }
+  .prev-recipient-row { display: flex; gap: 8px; justify-content: center; }
+
+  /* ── Rewards ── */
+  .prev-rewards { background: linear-gradient(160deg, #1a1000 0%, #0a0a10 60%); }
+  .prev-xp-display { font-size: 28px; font-weight: 700; color: #FFD700; }
+  .prev-reward-card { background: rgba(255,215,0,.08); border: 1px solid rgba(255,215,0,.2); border-radius: 10px; padding: 8px 10px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+  .prev-reward-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,.85); }
+  .prev-reward-xp { font-size: 9px; font-weight: 700; color: #FFD700; }
+  .prev-redeem-btn { font-size: 7px; background: var(--red); color: #fff; border-radius: 99px; padding: 3px 8px; }
+
+  /* ── Starter Portfolio ── */
+  .prev-starter { background: linear-gradient(160deg, var(--red-dark) 0%, var(--red-deep) 45%, #0a0a10 70%); }
+  .prev-starter-title { font-size: 22px; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 8px; }
+  .prev-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .prev-stat-card { background: rgba(0,0,0,.25); border-radius: 10px; padding: 8px; }
+  .prev-stat-num { font-size: 14px; font-weight: 700; color: #fff; }
+  .prev-stat-label { font-size: 7px; color: rgba(255,255,255,.55); }
+
+  /* ── Select Investment ── */
+  .prev-select { background: linear-gradient(160deg, #050510 0%, #0a0a10 60%); }
+  .prev-invest-type { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 8px 10px; margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+  .prev-invest-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+  .prev-invest-name { font-size: 9px; font-weight: 600; color: rgba(255,255,255,.85); }
+  .prev-invest-arrow { margin-left: auto; font-size: 10px; color: rgba(255,255,255,.3); }
+
+  /* ── Investment Center ── */
+  .prev-center { background: linear-gradient(160deg, #030010 0%, #0a0a10 60%); }
+  .prev-amount-row { display: flex; flex-wrap: wrap; gap: 5px; }
+  .prev-amount-chip { border: 1px solid rgba(237,28,36,.3); border-radius: 99px; padding: 4px 10px; font-size: 9px; font-weight: 600; color: rgba(255,255,255,.7); }
+  .prev-amount-chip.active { background: var(--red); border-color: var(--red); color: #fff; }
+  .prev-alloc { display: flex; gap: 3px; margin-top: 8px; height: 8px; border-radius: 99px; overflow: hidden; }
+  .prev-alloc-seg { height: 100%; border-radius: 99px; }
+
+  /* ── Investment Confirmation ── */
+  .prev-confirm { background: linear-gradient(160deg, #001a10 0%, #0a0a10 60%); }
+  .prev-check { width: 48px; height: 48px; background: rgba(29,158,117,.2); border: 2px solid var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 10px auto; font-size: 22px; }
+  .prev-detail-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,.06); padding: 5px 0; font-size: 8px; }
+  .prev-detail-label { color: rgba(255,255,255,.4); }
+  .prev-detail-val { color: rgba(255,255,255,.85); font-weight: 600; }
+
+  /* ── Streaks ── */
+  .prev-streaks { background: linear-gradient(160deg, #100005 0%, #0a0a10 60%); }
+  .prev-streak-row { display: flex; gap: 4px; justify-content: center; margin-bottom: 8px; }
+  .prev-day { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 600; color: rgba(255,255,255,.4); }
+  .prev-day.done { background: var(--red); border-color: var(--red); color: #fff; }
+  .prev-xp-bar { height: 5px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
+  .prev-xp-fill { height: 100%; background: linear-gradient(90deg, var(--red), #FFD700); border-radius: 99px; transition: width 1.2s ease .4s; }
+
+  /* ── Card Footer ── */
+  .card-footer {
+    padding: 16px 20px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.9); }
+  .card-subtitle { font-size: 11px; color: rgba(255,255,255,.35); margin-top: 2px; }
+  .card-arrow {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(237,28,36,.12); border: 1px solid rgba(237,28,36,.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--red);
+    transition: background .2s, transform .2s;
+  }
+  .phone-card:hover .card-arrow {
+    background: var(--red); color: #fff; transform: translateX(3px);
+  }
+
+  /* ── Nav dot indicator ── */
+  .card-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    margin-left: auto; margin-right: 8px;
+  }
+
+  /* ── Bottom footer ── */
+  .site-footer {
+    text-align: center; padding: 40px;
+    border-top: 1px solid rgba(255,255,255,.05);
+    color: rgba(255,255,255,.2);
+    font-size: 12px;
+    letter-spacing: .04em;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* ── Ambient particles ── */
+  .particle {
+    position: fixed; border-radius: 50%;
+    background: var(--red); opacity: 0.04;
+    pointer-events: none; animation: particleFloat linear infinite;
+  }
+  @keyframes particleFloat {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: .04; }
+    90% { opacity: .04; }
+    100% { transform: translateY(-120px) scale(1); opacity: 0; }
+  }
+
+  /* Hover on card: expand screen preview slightly */
+  .phone-card:hover .phone-screen { transform: scale(1.02); transition: transform .3s ease; }
+  .phone-screen { transition: transform .3s ease; }
+
+  /* Shine overlay */
+  .phone-card::after {
+    content: '';
+    position: absolute; inset: 0; border-radius: 28px;
+    background: linear-gradient(135deg, rgba(255,255,255,.04) 0%, transparent 50%);
+    pointer-events: none; z-index: 20;
+  }
+
+  /* Progress bars animate on card visible */
+  .phone-card.visible .prev-progress-fill,
+  .phone-card.visible .prev-xp-fill { transition-delay: .3s !important; }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="sf-cursor"></div>
+<div id="sf-ring"></div>
+<div id="sf-glow"></div>
+
+<!-- Ambient Particles (generated by JS) -->
+<div id="particles"></div>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-tag">
+    <span style="font-family:'Material Symbols Outlined';font-size:14px">bolt</span>
+    Scotia FutureFlex · 3D Design System
+  </div>
+  <h1 class="hero-title">Your money,<br><span>animated.</span></h1>
+  <p class="hero-sub">8 interconnected screens. Gamified investing. Built for the next generation.</p>
+  <a href="financial_dashboard_animated_experience/code.html" class="hero-cta">
+    <span style="font-family:'Material Symbols Outlined';font-size:18px">play_arrow</span>
+    Launch App
+  </a>
+</section>
+
+<!-- ══════════════════ SCREENS GRID ══════════════════ -->
+<p class="screens-label">All screens · Click any to explore</p>
+
+<div class="grid-wrap" id="screenGrid">
+
+  <!-- 1. Financial Dashboard -->
+  <div class="phone-card" data-delay="0">
+    <a class="card-link" href="financial_dashboard_animated_experience/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-dashboard">
+          <div class="prev-tag">Total Banking</div>
+          <div class="prev-balance">$28,912.24</div>
+          <div style="margin-bottom:8px">
+            <div class="prev-account">
+              <div class="prev-account-dot" style="background:rgba(237,28,36,.25)"></div>
+              <div>
+                <div class="prev-account-name">Basic Plus</div>
+                <div class="prev-progress-bar" style="width:80px"><div class="prev-progress-fill" style="width:0%;transition:width 1s ease .5s" data-width="70%"></div></div>
+              </div>
+              <div class="prev-account-val">$7,482</div>
+            </div>
+            <div class="prev-account">
+              <div class="prev-account-dot" style="background:rgba(25,96,166,.25)"></div>
+              <div>
+                <div class="prev-account-name">Momentum PLUS</div>
+                <div class="prev-progress-bar" style="width:80px"><div class="prev-progress-fill" style="width:0%;transition:width 1s ease .65s" data-width="90%"></div></div>
+              </div>
+              <div class="prev-account-val">$18,293</div>
+            </div>
+            <div class="prev-account">
+              <div class="prev-account-dot" style="background:rgba(83,74,183,.25)"></div>
+              <div>
+                <div class="prev-account-name">Savings</div>
+                <div class="prev-progress-bar" style="width:80px"><div class="prev-progress-fill" style="width:0%;transition:width 1s ease .8s" data-width="30%"></div></div>
+              </div>
+              <div class="prev-account-val">$3,137</div>
+            </div>
+          </div>
+          <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.4);margin-bottom:5px">Investment Goals</div>
+          <div class="prev-progress-bar" style="margin-bottom:4px"><div class="prev-progress-fill" style="width:0%;background:#ed1c24;transition:width 1.2s ease .9s" data-width="65%"></div></div>
+          <div class="prev-progress-bar"><div class="prev-progress-fill" style="width:0%;background:#1960a6;transition:width 1.2s ease 1s" data-width="40%"></div></div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Financial Dashboard</div>
+          <div class="card-subtitle">Home · Accounts · Goals</div>
+        </div>
+        <div class="card-dot" style="background:var(--red)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 2. Transfers Dashboard -->
+  <div class="phone-card" data-delay="80">
+    <a class="card-link" href="transfers_dashboard_animated_experience/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-transfers">
+          <div style="font-size:18px;font-weight:700;color:#fff;margin:8px 0 12px">Transfers</div>
+          <div class="prev-action-row">
+            <div class="prev-action-btn">
+              <div class="prev-action-icon" style="font-family:'Material Symbols Outlined'">sync_alt</div>
+              Move Money
+            </div>
+            <div class="prev-action-btn">
+              <div class="prev-action-icon" style="font-family:'Material Symbols Outlined'">receipt_long</div>
+              Pay Bills
+            </div>
+            <div class="prev-action-btn">
+              <div class="prev-action-icon" style="font-family:'Material Symbols Outlined'">send</div>
+              e-Transfer
+            </div>
+          </div>
+          <div style="font-size:9px;color:rgba(255,255,255,.4);margin:8px 0 6px">Recent Recipients</div>
+          <div class="prev-recipient-row">
+            <div class="prev-recipient" style="background:#3B5998">JW</div>
+            <div class="prev-recipient" style="background:#C13584">SK</div>
+            <div class="prev-recipient" style="background:#128C7E">ML</div>
+            <div class="prev-recipient" style="background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.2)">+</div>
+          </div>
+          <div style="font-size:9px;color:rgba(255,255,255,.4);margin:10px 0 6px">Recurring</div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,.7)">
+            <span>Rent Payment</span><span style="font-weight:700;color:#fff">$2,450</span>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:7px 9px;display:flex;justify-content:space-between;font-size:8px;color:rgba(255,255,255,.7);margin-top:4px">
+            <span>Auto-Savings</span><span style="font-weight:700;color:var(--green)">$250</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Transfers Dashboard</div>
+          <div class="card-subtitle">Move Money · Pay · e-Transfer</div>
+        </div>
+        <div class="card-dot" style="background:var(--blue)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 3. Rewards Store -->
+  <div class="phone-card" data-delay="160">
+    <a class="card-link" href="rewards_store_refined_format/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-rewards">
+          <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,215,0,.6);margin-bottom:4px">XP Balance</div>
+          <div class="prev-xp-display">970 XP</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.35);margin:8px 0">Spark Saver · Tier 2</div>
+          <div class="prev-reward-card">
+            <div>
+              <div class="prev-reward-name">Fee-free Month</div>
+              <div class="prev-reward-xp">500 XP</div>
+            </div>
+            <div class="prev-redeem-btn">Redeem</div>
+          </div>
+          <div class="prev-reward-card">
+            <div>
+              <div class="prev-reward-name">2× Round-up Week</div>
+              <div class="prev-reward-xp">300 XP</div>
+            </div>
+            <div class="prev-redeem-btn">Redeem</div>
+          </div>
+          <div class="prev-reward-card" style="opacity:.5">
+            <div>
+              <div class="prev-reward-name">$5 Bonus Deposit</div>
+              <div class="prev-reward-xp">1200 XP</div>
+            </div>
+            <div class="prev-redeem-btn" style="background:rgba(255,255,255,.1)">Locked</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Rewards Store</div>
+          <div class="card-subtitle">XP · Tiers · Redeem</div>
+        </div>
+        <div class="card-dot" style="background:var(--gold)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 4. Streaks & Habits -->
+  <div class="phone-card" data-delay="240">
+    <a class="card-link" href="streaks_habits_milestone_logic_integrated/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-streaks">
+          <div style="font-size:18px;font-weight:700;color:#fff;margin:8px 0 4px">Spark Saver</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.4);margin-bottom:10px">Level 2 · 870 / 1000 XP</div>
+          <div class="prev-xp-bar"><div class="prev-xp-fill" style="width:0%" data-width="87%"></div></div>
+          <div style="font-size:9px;color:rgba(255,255,255,.4);margin-bottom:6px">Weekly Streak</div>
+          <div class="prev-streak-row">
+            <div class="prev-day done">M</div>
+            <div class="prev-day done">T</div>
+            <div class="prev-day done">W</div>
+            <div class="prev-day done">T</div>
+            <div class="prev-day done">F</div>
+            <div class="prev-day">S</div>
+            <div class="prev-day">S</div>
+          </div>
+          <div style="font-size:9px;color:rgba(255,255,255,.4);margin-bottom:6px">Daily Habits</div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:6px 9px;display:flex;align-items:center;gap:6px;font-size:8px;color:rgba(255,255,255,.7);margin-bottom:4px">
+            <span style="color:var(--green);font-family:'Material Symbols Outlined';font-size:12px">check_circle</span>Check portfolio
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:6px 9px;display:flex;align-items:center;gap:6px;font-size:8px;color:rgba(255,255,255,.7)">
+            <span style="color:rgba(255,255,255,.2);font-family:'Material Symbols Outlined';font-size:12px">radio_button_unchecked</span>Round-up a purchase
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Streaks & Habits</div>
+          <div class="card-subtitle">XP · Milestones · Achievements</div>
+        </div>
+        <div class="card-dot" style="background:var(--red)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 5. Instant Starter Portfolio -->
+  <div class="phone-card" data-delay="320">
+    <a class="card-link" href="instant_starter_portfolio/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-starter">
+          <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px">New · For First-Time Investors</div>
+          <div class="prev-starter-title">Instant Starter<br>Portfolio</div>
+          <div class="prev-stat-grid">
+            <div class="prev-stat-card">
+              <div class="prev-stat-num">$0.43</div>
+              <div class="prev-stat-label">avg. daily round-up</div>
+            </div>
+            <div class="prev-stat-card">
+              <div class="prev-stat-num">60s</div>
+              <div class="prev-stat-label">to first portfolio</div>
+            </div>
+            <div class="prev-stat-card">
+              <div class="prev-stat-num">0.25%</div>
+              <div class="prev-stat-label">annual fee</div>
+            </div>
+            <div class="prev-stat-card">
+              <div class="prev-stat-num">TFSA</div>
+              <div class="prev-stat-label">tax-free growth</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Instant Starter Portfolio</div>
+          <div class="card-subtitle">Onboarding · Round-ups · TFSA</div>
+        </div>
+        <div class="card-dot" style="background:var(--red)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 6. Select Investment Type -->
+  <div class="phone-card" data-delay="400">
+    <a class="card-link" href="select_investment_type_standardized_format/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-select">
+          <div style="font-size:16px;font-weight:700;color:#fff;margin:8px 0 12px">Select Investment</div>
+          <div class="prev-invest-type">
+            <div class="prev-invest-icon" style="background:rgba(237,28,36,.2)">📈</div>
+            <div class="prev-invest-name">Mutual Funds</div>
+            <div class="prev-invest-arrow">›</div>
+          </div>
+          <div class="prev-invest-type">
+            <div class="prev-invest-icon" style="background:rgba(25,96,166,.2)">🌐</div>
+            <div class="prev-invest-name">ETFs</div>
+            <div class="prev-invest-arrow">›</div>
+          </div>
+          <div class="prev-invest-type">
+            <div class="prev-invest-icon" style="background:rgba(29,158,117,.2)">🔒</div>
+            <div class="prev-invest-name">GICs</div>
+            <div class="prev-invest-arrow">›</div>
+          </div>
+          <div class="prev-invest-type">
+            <div class="prev-invest-icon" style="background:rgba(83,74,183,.2)">📊</div>
+            <div class="prev-invest-name">Stocks</div>
+            <div class="prev-invest-arrow">›</div>
+          </div>
+          <div class="prev-invest-type" style="opacity:.4">
+            <div class="prev-invest-icon" style="background:rgba(186,117,23,.2)">₿</div>
+            <div class="prev-invest-name">Crypto ETFs</div>
+            <div style="font-size:7px;background:var(--gold);color:#fff;border-radius:99px;padding:2px 6px;margin-left:auto">Soon</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Select Investment Type</div>
+          <div class="card-subtitle">Funds · ETFs · GICs · Stocks</div>
+        </div>
+        <div class="card-dot" style="background:var(--purple)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 7. Investment Center -->
+  <div class="phone-card" data-delay="480">
+    <a class="card-link" href="investment_center_animated_experience/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-center">
+          <div style="font-size:16px;font-weight:700;color:#fff;margin:8px 0 4px">Invest Now</div>
+          <div style="font-size:8px;color:rgba(255,255,255,.35);margin-bottom:10px">Balanced Growth Portfolio</div>
+          <div style="font-size:9px;color:rgba(255,255,255,.4);margin-bottom:6px">Select Amount</div>
+          <div class="prev-amount-row">
+            <div class="prev-amount-chip">$25</div>
+            <div class="prev-amount-chip active">$50</div>
+            <div class="prev-amount-chip">$100</div>
+            <div class="prev-amount-chip">$200</div>
+            <div class="prev-amount-chip">$500</div>
+          </div>
+          <div style="font-size:9px;color:rgba(255,255,255,.4);margin:10px 0 4px">Allocation</div>
+          <div class="prev-alloc">
+            <div class="prev-alloc-seg" style="width:45%;background:var(--red)"></div>
+            <div class="prev-alloc-seg" style="width:40%;background:var(--blue)"></div>
+            <div class="prev-alloc-seg" style="width:15%;background:var(--green)"></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:6px;font-size:7px;color:rgba(255,255,255,.5)">
+            <span>🔴 CA Equities 45%</span>
+            <span>🔵 Global 40%</span>
+            <span>🟢 Bonds 15%</span>
+          </div>
+          <div style="margin-top:10px;background:rgba(237,28,36,.15);border:1px solid rgba(237,28,36,.3);border-radius:8px;padding:8px;text-align:center;font-size:11px;font-weight:700;color:var(--red)">
+            + 150 XP earned
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Investment Center</div>
+          <div class="card-subtitle">Amounts · Allocation · XP</div>
+        </div>
+        <div class="card-dot" style="background:var(--blue)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 8. Investment Confirmation -->
+  <div class="phone-card" data-delay="560">
+    <a class="card-link" href="investment_confirmation_simplified_flow/code.html">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="screen-preview prev-confirm">
+          <div class="prev-check">✓</div>
+          <div style="text-align:center;font-size:14px;font-weight:700;color:#fff;margin-bottom:12px">Investment Confirmed!</div>
+          <div style="border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 10px">
+            <div class="prev-detail-row">
+              <span class="prev-detail-label">Amount</span>
+              <span class="prev-detail-val">$50.00</span>
+            </div>
+            <div class="prev-detail-row">
+              <span class="prev-detail-label">Portfolio</span>
+              <span class="prev-detail-val">Balanced Growth</span>
+            </div>
+            <div class="prev-detail-row" style="border:none">
+              <span class="prev-detail-label">Account</span>
+              <span class="prev-detail-val">TFSA Starter</span>
+            </div>
+          </div>
+          <div style="margin-top:8px;background:rgba(186,117,23,.1);border:1px solid rgba(186,117,23,.3);border-radius:8px;padding:7px;display:flex;align-items:center;gap:6px">
+            <span style="font-size:14px">⚡</span>
+            <span style="font-size:8px;font-weight:600;color:#FFD700">+150 XP · Streak Unlocked!</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="card-title">Investment Confirmation</div>
+          <div class="card-subtitle">Success · XP · CDIC Protected</div>
+        </div>
+        <div class="card-dot" style="background:var(--green)"></div>
+        <div class="card-arrow">›</div>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  Scotia FutureFlex · CaseHacks 3D Design System · 2025
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Cursor ── */
+  const cur = document.getElementById('sf-cursor');
+  const ring = document.getElementById('sf-ring');
+  const glow = document.getElementById('sf-glow');
+  let mx = -200, my = -200, rx = -200, ry = -200, gx = -200, gy = -200;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  (function loop() {
+    cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+    rx += (mx - rx) * 0.13; ry += (my - ry) * 0.13;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    gx += (mx - gx) * 0.07; gy += (my - gy) * 0.07;
+    glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cur.style.width = '6px'; cur.style.height = '6px';
+      ring.style.width = '56px'; ring.style.height = '56px';
+      ring.style.borderColor = 'rgba(237,28,36,.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cur.style.width = '14px'; cur.style.height = '14px';
+      ring.style.width = '42px'; ring.style.height = '42px';
+      ring.style.borderColor = 'rgba(237,28,36,.45)';
+    });
+  });
+  document.addEventListener('mousedown', () => { cur.style.transform = 'translate(-50%,-50%) scale(.5)'; });
+  document.addEventListener('mouseup', () => { cur.style.transform = 'translate(-50%,-50%) scale(1)'; });
+
+  /* ── Particles ── */
+  const pWrap = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    const size = Math.random() * 60 + 20;
+    p.className = 'particle';
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random() * 100}vw;
+      animation-duration:${Math.random() * 14 + 10}s;
+      animation-delay:${Math.random() * 12}s;
+    `;
+    pWrap.appendChild(p);
+  }
+
+  /* ── 3D Tilt on Cards ── */
+  document.querySelectorAll('.phone-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${-y * 8}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  /* ── Staggered card entry ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = parseInt(entry.target.dataset.delay || 0);
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+          // Animate progress/xp bars inside
+          entry.target.querySelectorAll('[data-width]').forEach(bar => {
+            setTimeout(() => { bar.style.width = bar.dataset.width; }, 300);
+          });
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.phone-card').forEach(c => observer.observe(c));
+
+  /* ── Page transition on link click ── */
+  document.querySelectorAll('a[href]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href && !href.startsWith('http') && !href.startsWith('#')) {
+        e.preventDefault();
+        document.body.style.transition = 'opacity .3s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => { window.location.href = href; }, 320);
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

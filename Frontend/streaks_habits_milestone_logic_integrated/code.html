@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Scotia FutureFlex - Streaks &amp; Habits</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#e60023",
+                        "scotia-red-bright": "#e60023",
+                        "scotia-red-dark": "#990000",
+                        "background": "#ffffff",
+                        "on-background": "#000000",
+                        "surface": "#ffffff",
+                        "on-surface": "#000000",
+                        "surface-variant": "#eeeeee",
+                        "text-muted": "#666666",
+                        "success-emerald": "#1D9E75"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "9999px",
+                        "lg": "9999px",
+                        "xl": "9999px",
+                        "full": "9999px",
+                        "card": "1.5rem"
+                    },
+                    "spacing": {
+                        "sm": "0.5rem",
+                        "xs": "0.25rem",
+                        "lg": "1rem",
+                        "md": "0.75rem",
+                        "xl": "1.5rem",
+                        "gutter-mobile": "1.25rem"
+                    },
+                    "fontFamily": {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "display": ["Clash Display", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ios-notch {
+            width: 160px;
+            height: 30px;
+            background: #000;
+            margin: 0 auto;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+        body {
+            background-color: #F4F4F4;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .font-display { font-family: 'Clash Display', sans-serif; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up-fade {
+            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.6) 25%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.6) 75%, rgba(255,255,255,1) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 4s infinite linear;
+        }
+
+        @keyframes growProgress {
+            from { width: 0%; }
+            to { width: var(--progress-width); }
+        }
+        .animate-progress {
+            animation: growProgress 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="flex justify-center items-start min-h-screen text-on-background">
+<!-- Mobile Chassis Wrapper -->
+<div class="relative w-[375px] h-[812px] bg-background shadow-2xl overflow-hidden border-[8px] border-gray-200 rounded-[44px] my-8">
+<!-- iOS Status Bar & Notch -->
+<div class="h-11 w-full relative z-50 bg-white/80 backdrop-blur-md">
+<div class="ios-notch"></div>
+<div class="flex justify-between items-center px-6 pt-3">
+<span class="text-[14px] font-bold">9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">battery_full</span>
+</div>
+</div>
+</div>
+<!-- TopAppBar (Matched to SCREEN_42) -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-lg py-md bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-black flex items-center justify-center overflow-hidden shadow-sm">
+<img alt="Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxiXZJwsRT4vz5hI_9-zRAp5TPKE7wjNGTRwidpx30RqjJb4RPzqa3i09C3PRGpIctr6TCtOWThj51OCkatK4zzKYsbv64CeRuFQ_0kp4gRUwY0gCYb4nsAhC2ApStGr3JcxkBQLYwB9tQHSZ7KaIxZSDu69uxm5LfT2U7A_IJOHgNjh9nyJiBMlse7XrLvbDSD-aQ2qiU8TSLFTEs7q_1J1tpZWirmOvChQ5VCrBp9P26TPGLV3wVcDyn8ZJ3wN0ozYhr6HNT0rQw"/>
+</div>
+<div class="flex flex-col">
+<span class="font-display text-[18px] font-bold text-scotia-red-bright leading-tight">Scotia FutureFlex</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-scotia-red-bright">
+<button class="material-symbols-outlined hover:bg-gray-100 p-1 rounded-full transition-colors active:scale-90">help_outline</button>
+<button class="material-symbols-outlined hover:bg-gray-100 p-1 rounded-full transition-colors active:scale-90">notifications</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="overflow-y-auto h-[calc(812px-44px-72px-80px)] no-scrollbar pb-12">
+<div class="px-gutter-mobile space-y-xl py-xl">
+<!-- Hero Section: Spark Saver Card -->
+<section class="animate-slide-up-fade">
+<div class="bg-scotia-red-dark rounded-card p-xl text-white shadow-lg overflow-hidden relative">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h1 class="font-display text-2xl font-bold shimmer-text">Spark Saver</h1>
+<p class="text-sm opacity-80 mt-1 font-medium">Level 2 investor</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+<span class="material-symbols-outlined text-orange-400" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] font-bold uppercase tracking-widest opacity-70">Experience Points</span>
+<span class="font-display font-bold">870 <span class="text-xs opacity-60">/ 1000 XP</span></span>
+</div>
+<div class="h-2 w-full bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-white rounded-full animate-progress" style="--progress-width: 87%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Weekly Streak Section -->
+<section class="animate-slide-up-fade stagger-1 space-y-md">
+<div class="flex justify-between items-end px-xs">
+<h3 class="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Weekly Streak</h3>
+<span class="text-scotia-red-bright font-bold flex items-center gap-1 text-sm">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            3 Days
+                        </span>
+</div>
+<div class="bg-white border border-gray-200 rounded-card p-lg shadow-sm flex justify-between items-center">
+<div class="flex flex-col items-center gap-2">
+<span class="text-[10px] font-bold text-text-muted">M</span>
+<div class="w-10 h-10 rounded-full bg-scotia-red-bright flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-[10px] font-bold text-text-muted">T</span>
+<div class="w-10 h-10 rounded-full bg-scotia-red-bright flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-[10px] font-bold text-text-muted">W</span>
+<div class="w-10 h-10 rounded-full bg-scotia-red-bright flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<span class="text-[10px] font-bold text-scotia-red-bright">T</span>
+<div class="w-10 h-10 rounded-full border-2 border-scotia-red-bright flex items-center justify-center text-scotia-red-bright bg-white">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-30">
+<span class="text-[10px] font-bold text-text-muted">F</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"></div>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-30">
+<span class="text-[10px] font-bold text-text-muted">S</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"></div>
+</div>
+<div class="flex flex-col items-center gap-2 opacity-30">
+<span class="text-[10px] font-bold text-text-muted">S</span>
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"></div>
+</div>
+</div>
+</section><section class="animate-slide-up-fade space-y-md stagger-3">
+<div class="px-xs flex justify-between items-end">
+<h3 class="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Streak Rewards</h3>
+</div>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+<!-- Scene+ Point Bonus Card -->
+<div class="flex-shrink-0 w-[280px] bg-white border border-gray-200 rounded-card p-lg shadow-sm space-y-3">
+<div class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-2xl bg-[#FFF4E5] flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[#B87000]" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<div>
+<h4 class="font-display font-bold text-sm text-on-background">Scene+ point bonus</h4>
+<p class="text-[10px] font-medium text-text-muted">any streak milestone</p>
+</div>
+</div>
+<p class="text-[11px] leading-relaxed text-text-muted">
+                250-1000 bonus Scene+ points for hitting streak milestones. Scene+ already exists in Scotiabank's ecosystem — this is pure integration.
+            </p>
+</div>
+<!-- 2x Scene+ Multiplier Card -->
+<div class="flex-shrink-0 w-[280px] bg-white border border-gray-200 rounded-card p-lg shadow-sm space-y-3">
+<div class="flex gap-3 items-start">
+<div class="w-10 h-10 rounded-2xl bg-[#FFF4E5] flex items-center justify-center flex-shrink-0">
+<span class="text-[#B87000] font-bold text-xs">2x</span>
+</div>
+<div>
+<h4 class="font-display font-bold text-sm text-on-background">2x Scene+ on next purchase</h4>
+<p class="text-[10px] font-medium text-text-muted">7-day streak • Spark tier</p>
+</div>
+</div>
+<p class="text-[11px] leading-relaxed text-text-muted">
+                Double Scene+ points on any one purchase in the next 7 days. Bridges the investment habit with everyday spending.
+            </p>
+<div class="flex gap-2">
+<span class="bg-[#FFF4E5] text-[#B87000] text-[9px] font-bold px-2 py-1 rounded-full">immediate value</span>
+<span class="bg-green-50 text-success-emerald text-[9px] font-bold px-2 py-1 rounded-full">low cost to bank</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Today's Habits Section -->
+<section class="space-y-md animate-slide-up-fade stagger-3">
+<div class="px-xs">
+<h3 class="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Today's Habits</h3>
+</div>
+<div class="space-y-3">
+<!-- Habit Item 1 (Completed) -->
+<div class="flex items-center justify-between p-lg bg-white rounded-card border border-gray-200 shadow-sm opacity-60">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-success-emerald">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<div>
+<p class="font-bold text-sm">Check portfolio</p>
+<p class="text-[10px] text-text-muted">Done today • +10 XP earned</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-success-emerald">check_circle</span>
+</div>
+<!-- Habit Item 2 -->
+<div class="flex items-center justify-between p-lg bg-white rounded-card border border-gray-200 shadow-sm transition-all hover:border-scotia-red-bright/30 group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-scotia-red-bright/10 group-hover:text-scotia-red-bright transition-colors">
+<span class="material-symbols-outlined">savings</span>
+</div>
+<div>
+<p class="font-bold text-sm">Round-up a purchase</p>
+<p class="text-[10px] text-scotia-red-bright font-bold uppercase tracking-wider">+10 XP reward</p>
+</div>
+</div>
+<button class="bg-scotia-red-bright text-white text-[10px] font-bold py-2 px-4 rounded-full shadow-sm active:scale-95 transition-all">Mark done</button>
+</div>
+<!-- Habit Item 3 -->
+<div class="flex items-center justify-between p-lg bg-white rounded-card border border-gray-200 shadow-sm transition-all hover:border-scotia-red-bright/30 group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 group-hover:bg-scotia-red-bright/10 group-hover:text-scotia-red-bright transition-colors">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div>
+<p class="font-bold text-sm">Read today's money tip</p>
+<p class="text-[10px] text-scotia-red-bright font-bold uppercase tracking-wider">+20 XP reward</p>
+</div>
+</div>
+<button class="bg-scotia-red-bright text-white text-[10px] font-bold py-2 px-4 rounded-full shadow-sm active:scale-95 transition-all">Mark done</button>
+</div>
+</div>
+</section>
+<!-- Achievements Teaser -->
+<section class="animate-slide-up-fade stagger-3 space-y-md stagger-4">
+<div class="flex justify-between items-end px-xs">
+<h3 class="font-display text-sm font-bold uppercase tracking-widest text-text-muted">Achievements</h3>
+<span class="text-scotia-red-bright font-bold text-xs cursor-pointer active:opacity-60 transition-opacity">View all</span>
+</div>
+<div class="flex gap-4 overflow-x-auto no-scrollbar pb-2 px-xs">
+<div class="flex-shrink-0 w-28 h-28 bg-white border border-gray-100 rounded-card flex flex-col items-center justify-center text-center p-3 shadow-sm">
+<div class="w-10 h-10 rounded-full bg-scotia-red-bright/10 flex items-center justify-center text-scotia-red-bright mb-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-[10px] font-bold leading-tight">Verified Starter</p>
+</div>
+<div class="flex-shrink-0 w-28 h-28 bg-white border border-dashed border-gray-200 rounded-card flex flex-col items-center justify-center text-center p-3 opacity-50">
+<div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 mb-2">
+<span class="material-symbols-outlined">stars</span>
+</div>
+<p class="text-[10px] font-bold leading-tight">First Invest</p>
+</div>
+<div class="flex-shrink-0 w-28 h-28 bg-white border border-dashed border-gray-200 rounded-card flex flex-col items-center justify-center text-center p-3 opacity-50">
+<div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 mb-2">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<p class="text-[10px] font-bold leading-tight">7 Day Streak</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Matched to SCREEN_42) -->
+<nav class="absolute bottom-0 left-0 w-full z-50 flex justify-around items-center px-md pb-8 pt-sm bg-white/80 backdrop-blur-md border-t border-gray-200 shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red-bright transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold mt-0.5">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red-bright transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined">sync_alt</span>
+<span class="text-[10px] font-bold mt-0.5">Transfers</span>
+</button>
+<button class="flex flex-col items-center justify-center text-scotia-red-bright font-bold transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">redeem</span>
+<span class="text-[10px] font-bold mt-0.5">Rewards</span>
+</button>
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red-bright transition-all duration-200 active:scale-90">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="text-[10px] font-bold mt-0.5">Invest</span>
+</button>
+</nav>
+</div>
+<script>
+        // Micro-interaction for mark done buttons
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.innerText === 'Mark done') {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.flex.items-center.justify-between');
+                    this.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span>';
+                    this.classList.add('bg-success-emerald');
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '0.6';
+                        this.parentElement.innerHTML = '<span class="material-symbols-outlined text-success-emerald">check_circle</span>';
+                    }, 300);
+                });
+            }
+        });
+    </script>
+<!-- ─── ANIMATION LAYER ─── -->
+<style>
+*{cursor:none!important}
+#sf-cur{position:fixed;width:12px;height:12px;background:#ed1c24;border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference}
+#sf-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(237,28,36,.4);border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+#sf-glow{position:fixed;width:120px;height:120px;background:radial-gradient(circle,rgba(237,28,36,.1),transparent 70%);border-radius:50%;pointer-events:none;z-index:999997;transform:translate(-50%,-50%)}
+#sf-ov{position:fixed;inset:0;background:#ed1c24;z-index:99998;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:opacity .5s ease,transform .6s cubic-bezier(.76,0,.24,1)}
+.sf-logo{color:#fff;font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.02em;opacity:0;transform:translateY(8px);transition:all .4s ease .1s}
+.sf-sub{color:rgba(255,255,255,.6);font-family:'Clash Display',sans-serif;font-size:11px;opacity:0;transition:all .4s ease .2s}
+@keyframes sfRipple{to{transform:scale(20);opacity:0}}
+.sf-lift{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s!important}
+.sf-lift:hover{transform:translateY(-3px) scale(1.015)!important;box-shadow:0 12px 32px rgba(0,0,0,.14)!important}
+.sf-fade{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.sf-fade.sf-in{opacity:1;transform:none}
+</style>
+<div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
+<div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Streaks &amp; Habits</div></div>
+<script>
+(function(){
+var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
+var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+(function loop(){C.style.left=mx+'px';C.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;R.style.left=rx+'px';R.style.top=ry+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;G.style.left=gx+'px';G.style.top=gy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('button,a,[role=button],.cursor-pointer,input,select').forEach(function(el){
+  el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(237,28,36,.8)'});
+  el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(237,28,36,.4)'});
+});
+document.addEventListener('mousedown',function(){C.style.transform='translate(-50%,-50%) scale(.4)';R.style.transform='translate(-50%,-50%) scale(.8)'});
+document.addEventListener('mouseup',function(){C.style.transform='translate(-50%,-50%) scale(1)';R.style.transform='translate(-50%,-50%) scale(1)'});
+var OV=document.getElementById('sf-ov');
+var logo=OV.querySelector('.sf-logo'),sub=OV.querySelector('.sf-sub');
+setTimeout(function(){logo.style.opacity='1';logo.style.transform='translateY(0)';sub.style.opacity='1'},60);
+setTimeout(function(){OV.style.opacity='0';OV.style.transform='translateY(-100%)'},650);
+setTimeout(function(){OV.remove()},1200);
+setTimeout(function(){
+  var items=document.querySelectorAll('section,.rounded-xl,.rounded-2xl,[class*="stagger"],[class*="animate-slide"]');
+  items.forEach(function(el,i){if(!el.closest('#sf-ov')){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},750+i*70)}});
+},120);
+document.querySelectorAll('button').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var rpl=document.createElement('span');
+    rpl.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.3);width:8px;height:8px;left:'+(e.offsetX-4)+'px;top:'+(e.offsetY-4)+'px;transform:scale(0);animation:sfRipple .5s ease forwards;pointer-events:none;';
+    if(getComputedStyle(this).position==='static')this.style.position='relative';
+    this.style.overflow='hidden';this.appendChild(rpl);setTimeout(function(){rpl.remove()},500);
+  });
+});
+document.querySelectorAll('.rounded-xl,.rounded-2xl,.shadow-sm,.shadow-md,.shadow-lg').forEach(function(el){
+  if(el.children.length>0&&!el.matches('nav,header,#sf-ov *'))el.classList.add('sf-lift');
+});
+function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
+/* Navigation */
+document.querySelectorAll('nav button, [class*="nav"] button').forEach(function(btn){
+  var t=btn.textContent.trim();
+  if(t.includes('Home'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
+  if(t.includes('Rewards'))btn.onclick=function(){sfNav('../rewards_store_refined_format/code.html')};
+  if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
+  if(t.includes('Invest'))btn.onclick=function(){sfNav('../investment_center_animated_experience/code.html')};
+});
+})();
+</script>
+</body></html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Scotia FutureFlex - Rewards Store</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#fdfaf3",
+                        "error": "#ba1a1a",
+                        "secondary": "#5d5f5b",
+                        "on-error-container": "#93000a",
+                        "surface-container": "#eeeeeb",
+                        "surface": "#f9f9f6",
+                        "tertiary": "#5b5a56",
+                        "inverse-on-surface": "#f1f1ee",
+                        "on-primary-container": "#fff7f6",
+                        "primary-container": "#e60023",
+                        "inverse-primary": "#ffb3ad",
+                        "secondary-fixed": "#e3e3de",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#ffb3ad",
+                        "primary-fixed": "#ffdad7",
+                        "on-secondary-fixed-variant": "#464744",
+                        "secondary-container": "#e0e0db",
+                        "surface-bright": "#f9f9f6",
+                        "on-tertiary-fixed": "#1c1c18",
+                        "on-surface-variant": "#5e3f3c",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#62635f",
+                        "on-primary-fixed": "#410004",
+                        "primary": "#b7001a",
+                        "on-secondary-fixed": "#1a1c19",
+                        "on-background": "#1a1c1b",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#936e6b",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e2e3e0",
+                        "surface-container-low": "#f4f4f1",
+                        "outline-variant": "#e8bcb8",
+                        "tertiary-container": "#74736e",
+                        "on-surface": "#1a1c1b",
+                        "tertiary-fixed": "#e5e2dc",
+                        "inverse-surface": "#2f312f",
+                        "surface-variant": "#e2e3e0",
+                        "on-tertiary-fixed-variant": "#474742",
+                        "surface-tint": "#c0001b",
+                        "surface-container-high": "#e8e8e5",
+                        "tertiary-fixed-dim": "#c9c6c0",
+                        "on-secondary": "#ffffff",
+                        "background": "#f9f9f6",
+                        "surface-dim": "#dadad7",
+                        "on-primary-fixed-variant": "#930012",
+                        "secondary-fixed-dim": "#c6c7c2",
+                        "scotia-red-bright": "#ed1c24",
+                        "scotia-red-dark": "#990000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "16px",
+                        "sm": "8px",
+                        "section": "64px",
+                        "xxs": "4px",
+                        "xxl": "32px",
+                        "xs": "6px",
+                        "xl": "24px",
+                        "md": "12px",
+                        "gutter-mobile": "1.25rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Clash Display", "sans-serif"],
+                        "heading-xl": ["Clash Display", "sans-serif"],
+                        "display-xl": ["Clash Display", "sans-serif"],
+                        "display-lg": ["Clash Display", "sans-serif"],
+                        "button-md": ["Clash Display", "sans-serif"],
+                        "sans": ["Clash Display", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "heading-xl": ["28px", {"lineHeight": "1.2", "letterSpacing": "-1.2px", "fontWeight": "700"}],
+                        "display-xl": ["70px", {"lineHeight": "1.1", "letterSpacing": "-1.2px", "fontWeight": "600"}],
+                        "display-lg": ["44px", {"lineHeight": "1.15", "letterSpacing": "-0.8px", "fontWeight": "700"}],
+                        "button-md": ["14px", {"lineHeight": "1", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .ios-notch {
+            width: 160px;
+            height: 30px;
+            background: #000;
+            margin: 0 auto;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+        body {
+            background-color: #F8F8F8;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Clash Display', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .ios-shadow {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .active-tier-glow {
+            box-shadow: 0 0 20px rgba(237, 28, 36, 0.15);
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        .shake {
+            animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-start min-h-screen text-on-surface">
+<!-- Mobile Chassis Wrapper -->
+<div class="relative w-[375px] h-[812px] bg-white shadow-2xl overflow-hidden border-[8px] border-surface-dim rounded-[44px] my-8">
+<!-- iOS Status Bar & Notch -->
+<div class="h-11 w-full relative z-50 bg-white">
+<div class="ios-notch"></div>
+<div class="flex justify-between items-center px-6 pt-3">
+<span class="text-[14px] font-bold">9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">battery_full</span>
+</div>
+</div>
+</div>
+<!-- TopAppBar (Matches SCREEN_67) -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-gutter-mobile py-md bg-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-scotia-red-bright flex items-center justify-center overflow-hidden">
+<img alt="Scotia Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdAXEUWjGs9iuQZTrj8wShGMUFJxRhTwEIUZ4uoPbv5uIqe_5jr7FnasOyIaF-xd-I_mcDHzhSRw9zjKjkojLbcxBC601d9BmuXUyEmtLITL6Dv2PMMNA0TwqJVpAnydM-x-s8V3vl2d78BLFBw9SYs1TAOvhB1jDU8SINpzZ7IT0NNNlJ0PRJZUTmuXo_ZNdhF3aGt75GHFABWjFReoJC8BrOXls3856wCDIKMD1R9BXAz7rJ_svma40Ny4AJtdFJtX_RS-oshvy1"/>
+</div>
+<span class="text-[20px] font-bold text-scotia-red-bright tracking-tight">Scotia FutureFlex</span>
+</div>
+<div class="flex items-center gap-4 text-scotia-red-bright">
+<button class="material-symbols-outlined">help_outline</button>
+<button class="material-symbols-outlined">notifications</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="overflow-y-auto h-[calc(812px-44px-72px-80px)] no-scrollbar pb-24 bg-white">
+<div class="px-gutter-mobile space-y-xl pt-lg">
+<!-- Rewards Header -->
+<section>
+<h1 class="text-[32px] font-bold text-on-surface leading-tight">Rewards Store</h1>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-amber-500 text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+<p class="text-[15px] text-secondary font-medium" id="xp-balance-header">970 XP available to spend</p>
+</div>
+</section>
+<!-- Status Card (Themed like SCREEN_67 Balance Card but white) -->
+<section>
+<div class="bg-white border border-gray-100 rounded-[24px] p-xl ios-shadow space-y-md">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-[20px] font-bold text-on-surface">Spark Saver</h2>
+<p class="text-[10px] text-secondary font-bold uppercase tracking-widest mt-0.5">Level 2</p>
+</div>
+<span class="text-[10px] text-scotia-red-bright font-bold uppercase tracking-tight" id="xp-next-tier-label">30 XP TO GOLD</span>
+</div>
+<div class="h-2.5 w-full bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-scotia-red-bright transition-all duration-700 ease-out" id="xp-progress-bar" style="width: 97%;"></div>
+</div>
+</div>
+</section>
+<!-- Membership Tiers (Grid inspired by Dashboard Cards) -->
+<section class="space-y-md">
+<div class="flex justify-between items-center px-1">
+<h3 class="text-[11px] font-bold text-secondary uppercase tracking-[0.12em]">Membership Tiers</h3>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<!-- Starter -->
+<div class="bg-white p-lg rounded-[20px] border border-gray-100 ios-shadow flex flex-col justify-between aspect-square opacity-50 grayscale transition-all">
+<div class="space-y-sm">
+<div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined text-[24px]">sentiment_satisfied</span>
+</div>
+<h4 class="text-[15px] font-bold text-on-surface">Starter</h4>
+</div>
+<p class="text-[11px] text-secondary font-bold">0-499 XP</p>
+</div>
+<!-- Spark (Active) -->
+<div class="bg-white p-lg rounded-[20px] border-2 border-scotia-red-bright active-tier-glow flex flex-col justify-between aspect-square transition-all relative overflow-hidden">
+<div class="absolute top-0 right-0 bg-scotia-red-bright text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+                                Active
+                            </div>
+<div class="space-y-sm">
+<div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-scotia-red-bright">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<h4 class="text-[15px] font-bold text-on-surface">Spark</h4>
+</div>
+<p class="text-[11px] text-scotia-red-bright font-bold">500-999 XP</p>
+</div>
+<!-- Gold -->
+<div class="bg-white p-lg rounded-[20px] border border-gray-100 ios-shadow flex flex-col justify-between aspect-square transition-all">
+<div class="space-y-sm">
+<div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h4 class="text-[15px] font-bold text-on-surface">Gold</h4>
+</div>
+<p class="text-[11px] text-secondary font-bold">1000-2499 XP</p>
+</div>
+<!-- Vault -->
+<div class="bg-white p-lg rounded-[20px] border border-gray-100 ios-shadow flex flex-col justify-between aspect-square transition-all">
+<div class="space-y-sm">
+<div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<h4 class="text-[15px] font-bold text-on-surface">Vault</h4>
+</div>
+<p class="text-[11px] text-secondary font-bold">2500+ XP</p>
+</div>
+</div>
+</section>
+<!-- Available Rewards (Styled as Account Items in Dashboard) -->
+<section class="space-y-md">
+<div class="flex justify-between items-center px-1">
+<h3 class="text-[11px] font-bold text-secondary uppercase tracking-[0.12em]">Available Rewards</h3>
+</div>
+<div class="border border-gray-100 rounded-[20px] bg-white ios-shadow overflow-hidden" id="rewards-container">
+<!-- Reward 1 -->
+<div class="reward-card flex justify-between items-center p-lg border-b border-gray-50 active:bg-gray-50 transition-all duration-300" data-cost="500">
+<div class="reward-content flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center text-scotia-red-bright">
+<span class="material-symbols-outlined text-[24px]">percent</span>
+</div>
+<div>
+<p class="font-bold text-[15px] text-on-surface">Fee-free month</p>
+<p class="text-[11px] text-secondary font-bold uppercase tracking-wider mt-0.5">500 XP</p>
+</div>
+</div>
+<button class="redeem-btn bg-scotia-red-bright text-white text-[11px] uppercase font-bold px-5 py-2.5 rounded-full active:scale-95 transition-all shadow-sm">
+                                Redeem
+                            </button>
+</div>
+<!-- Reward 2 -->
+<div class="reward-card flex justify-between items-center p-lg border-b border-gray-50 active:bg-gray-50 transition-all duration-300" data-cost="300">
+<div class="reward-content flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined text-[24px]">double_arrow</span>
+</div>
+<div>
+<p class="font-bold text-[15px] text-on-surface">2x round-up week</p>
+<p class="text-[11px] text-secondary font-bold uppercase tracking-wider mt-0.5">300 XP</p>
+</div>
+</div>
+<button class="redeem-btn bg-scotia-red-bright text-white text-[11px] uppercase font-bold px-5 py-2.5 rounded-full active:scale-95 transition-all shadow-sm">
+                                Redeem
+                            </button>
+</div>
+<!-- Reward 3 (Locked) -->
+<div class="flex justify-between items-center p-lg opacity-60">
+<div class="flex items-center gap-4 grayscale">
+<div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center text-gray-400">
+<span class="material-symbols-outlined text-[24px]">monetization_on</span>
+</div>
+<div>
+<p class="font-bold text-[15px] text-on-surface">$5 bonus deposit</p>
+<p class="text-[11px] text-secondary font-bold uppercase tracking-wider mt-0.5">1200 XP</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-4 py-2 rounded-full bg-gray-100 border border-gray-200">
+<span class="material-symbols-outlined text-[16px] text-secondary">lock</span>
+<span class="text-[10px] text-secondary font-bold uppercase tracking-wide">Locked</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Promo Banner -->
+<section class="mt-8">
+<div class="relative w-full h-40 rounded-[28px] overflow-hidden shadow-lg">
+<img alt="Promo" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_cNmjHVQkKsRG_1GomgTtgRDKh5buIxskzH2nWdevo2hT1iRLgu0fAKHs_d_4gk3SN5T_LFvfnoEnHPPiVY5OK2YVQLyIU_yD4q98EClYRzxSbKWnupiw6t-TFCkvDTBA_mAGatNwrfgjPO83-WNxmpehjd9y4YRu9em-Xdnz_tl52tO7mGF0tTDbgdeEdKVfytPWZSvxsCfVa_sqqwhiQGl5O9jP8wonJ9V7WtM_ZKzzve80Lujw451HyDa3Ul7yPLaDQLeeloZw"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/30 to-transparent">
+<h4 class="text-white text-[20px] font-bold leading-tight">Unlock more as you grow</h4>
+<p class="text-white/80 text-[12px] font-medium mt-1">Higher tiers unlock exclusive rates.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Standardized) -->
+<nav class="absolute bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-10 pt-4 bg-white/95 backdrop-blur-lg border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<button class="flex flex-col items-center justify-center text-secondary hover:text-scotia-red-bright transition-colors">
+<span class="material-symbols-outlined text-[26px]">home</span>
+<span class="font-bold text-[10px] mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary hover:text-scotia-red-bright transition-colors">
+<span class="material-symbols-outlined text-[26px]">sync_alt</span>
+<span class="font-bold text-[10px] mt-1">Transfers</span>
+</button>
+<button class="flex flex-col items-center justify-center text-scotia-red-bright">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">redeem</span>
+<span class="font-bold text-[10px] mt-1">Rewards</span>
+</button>
+<button class="flex flex-col items-center justify-center text-secondary hover:text-scotia-red-bright transition-colors">
+<span class="material-symbols-outlined text-[26px]">trending_up</span>
+<span class="font-bold text-[10px] mt-1">Invest</span>
+</button>
+</nav>
+<!-- iOS Home Indicator -->
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1.5 bg-gray-200 rounded-full z-[60] opacity-50"></div>
+</div>
+<script>
+        (function() {
+            let currentXp = 970;
+            const nextTierThreshold = 1000;
+            
+            const xpBalanceHeader = document.getElementById('xp-balance-header');
+            const progressBarEl = document.getElementById('xp-progress-bar');
+            const nextTierLabelEl = document.getElementById('xp-next-tier-label');
+
+            function updateHeaderAndProgress() {
+                xpBalanceHeader.textContent = `${currentXp} XP available to spend`;
+
+                if (currentXp < nextTierThreshold) {
+                    const progress = (currentXp / nextTierThreshold) * 100;
+                    progressBarEl.style.width = `${progress}%`;
+                    nextTierLabelEl.textContent = `${nextTierThreshold - currentXp} XP TO GOLD`;
+                } else {
+                    progressBarEl.style.width = '100%';
+                    nextTierLabelEl.textContent = 'GOLD ACHIEVED';
+                }
+            }
+
+            function handleRedemption(event) {
+                const btn = event.currentTarget;
+                const card = btn.closest('.reward-card');
+                const content = card.querySelector('.reward-content');
+                const cost = parseInt(card.dataset.cost);
+
+                if (currentXp >= cost) {
+                    currentXp -= cost;
+                    updateHeaderAndProgress();
+
+                    // UI Changes
+                    card.classList.add('bg-gray-50', 'opacity-50');
+                    content.classList.add('grayscale');
+                    
+                    const parent = btn.parentElement;
+                    const redeemedLabel = document.createElement('div');
+                    redeemedLabel.className = "flex items-center gap-1.5 px-4 py-2 rounded-full bg-gray-100 border border-gray-200";
+                    redeemedLabel.innerHTML = `
+                        <span class="material-symbols-outlined text-[16px] text-emerald-600" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        <span class="text-[10px] text-secondary font-bold uppercase tracking-wide">Redeemed</span>
+                    `;
+                    
+                    btn.remove();
+                    parent.appendChild(redeemedLabel);
+                    checkAffordability();
+                } else {
+                    btn.classList.add('shake');
+                    setTimeout(() => btn.classList.remove('shake'), 500);
+                }
+            }
+
+            function checkAffordability() {
+                document.querySelectorAll('.redeem-btn').forEach(btn => {
+                    const card = btn.closest('.reward-card');
+                    const cost = parseInt(card.dataset.cost);
+                    if (currentXp < cost) {
+                        btn.classList.replace('bg-scotia-red-bright', 'bg-gray-300');
+                        btn.classList.replace('text-white', 'text-gray-500');
+                        btn.textContent = 'Insufficient';
+                        btn.style.pointerEvents = 'none';
+                    }
+                });
+            }
+
+            document.querySelectorAll('.redeem-btn').forEach(btn => {
+                btn.addEventListener('click', handleRedemption);
+            });
+
+            checkAffordability();
+            updateHeaderAndProgress();
+        })();
+    </script>
+<!-- ─── ANIMATION LAYER ─── -->
+<style>
+*{cursor:none!important}
+#sf-cur{position:fixed;width:12px;height:12px;background:#ed1c24;border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference}
+#sf-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(237,28,36,.4);border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+#sf-glow{position:fixed;width:120px;height:120px;background:radial-gradient(circle,rgba(186,117,23,.15),transparent 70%);border-radius:50%;pointer-events:none;z-index:999997;transform:translate(-50%,-50%)}
+#sf-ov{position:fixed;inset:0;background:#BA7517;z-index:99998;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:opacity .5s ease,transform .6s cubic-bezier(.76,0,.24,1)}
+.sf-logo{color:#fff;font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.02em;opacity:0;transform:translateY(8px);transition:all .4s ease .1s}
+.sf-sub{color:rgba(255,255,255,.6);font-family:'Clash Display',sans-serif;font-size:11px;opacity:0;transition:all .4s ease .2s}
+@keyframes sfRipple{to{transform:scale(20);opacity:0}}
+.sf-lift{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s!important}
+.sf-lift:hover{transform:translateY(-3px) scale(1.015)!important;box-shadow:0 12px 32px rgba(0,0,0,.14)!important}
+.sf-fade{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.sf-fade.sf-in{opacity:1;transform:none}
+</style>
+<div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
+<div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Rewards Store</div></div>
+<script>
+(function(){
+var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
+var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+(function loop(){C.style.left=mx+'px';C.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;R.style.left=rx+'px';R.style.top=ry+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;G.style.left=gx+'px';G.style.top=gy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('button,a,[role=button],.cursor-pointer,input,select').forEach(function(el){
+  el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(237,28,36,.8)'});
+  el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(237,28,36,.4)'});
+});
+document.addEventListener('mousedown',function(){C.style.transform='translate(-50%,-50%) scale(.4)';R.style.transform='translate(-50%,-50%) scale(.8)'});
+document.addEventListener('mouseup',function(){C.style.transform='translate(-50%,-50%) scale(1)';R.style.transform='translate(-50%,-50%) scale(1)'});
+var OV=document.getElementById('sf-ov');
+var logo=OV.querySelector('.sf-logo'),sub=OV.querySelector('.sf-sub');
+setTimeout(function(){logo.style.opacity='1';logo.style.transform='translateY(0)';sub.style.opacity='1'},60);
+setTimeout(function(){OV.style.opacity='0';OV.style.transform='translateY(-100%)'},650);
+setTimeout(function(){OV.remove()},1200);
+setTimeout(function(){
+  var items=document.querySelectorAll('section,.rounded-xl,.rounded-2xl,[class*="stagger"],[class*="animate-slide"]');
+  items.forEach(function(el,i){if(!el.closest('#sf-ov')){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},750+i*70)}});
+},120);
+document.querySelectorAll('button').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var rpl=document.createElement('span');
+    rpl.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.3);width:8px;height:8px;left:'+(e.offsetX-4)+'px;top:'+(e.offsetY-4)+'px;transform:scale(0);animation:sfRipple .5s ease forwards;pointer-events:none;';
+    if(getComputedStyle(this).position==='static')this.style.position='relative';
+    this.style.overflow='hidden';this.appendChild(rpl);setTimeout(function(){rpl.remove()},500);
+  });
+});
+document.querySelectorAll('.rounded-xl,.rounded-2xl,.shadow-sm,.shadow-md,.shadow-lg').forEach(function(el){
+  if(el.children.length>0&&!el.matches('nav,header,#sf-ov *'))el.classList.add('sf-lift');
+});
+function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
+/* Navigation */
+document.querySelectorAll('nav button').forEach(function(btn){
+  var t=btn.textContent.trim();
+  if(t.includes('Home'))btn.onclick=function(){sfNav('../financial_dashboard_animated_experience/code.html')};
+  if(t.includes('Transfers'))btn.onclick=function(){sfNav('../transfers_dashboard_animated_experience/code.html')};
+  if(t.includes('Invest'))btn.onclick=function(){sfNav('../instant_starter_portfolio/code.html')};
+});
+})();
+</script>
+</body></html>

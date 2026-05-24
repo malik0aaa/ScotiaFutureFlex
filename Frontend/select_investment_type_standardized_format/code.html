@@ -1,0 +1,311 @@
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Select Investment Type | Scotia FutureFlex</title>
+<!-- Google Fonts: Plus Jakarta Sans for UI/Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Clash Display for Bold Headlines and Brand -->
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                "colors": {
+                        "primary": "#ed1c24",
+                        "scotia-red": "#ed1c24",
+                        "surface": "#ffffff",
+                        "background": "#F8F8F8",
+                        "on-background": "#000000",
+                        "text-muted": "#666666",
+                        "outline": "#E2E2E2",
+                        "secondary": "#1960a6",
+                        "tertiary": "#003ec2",
+                        "success-emerald": "#1D9E75",
+                        "surface-dim": "#e0e0e0"
+                },
+                "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "1.5rem",
+                        "xl": "2rem",
+                        "full": "9999px"
+                },
+                "spacing": {
+                        "sm": "0.5rem",
+                        "xs": "0.25rem",
+                        "lg": "1rem",
+                        "safe-top": "28px",
+                        "md": "0.75rem",
+                        "xl": "1.5rem",
+                        "gutter-mobile": "1.5rem"
+                },
+                "fontFamily": {
+                        "sans": ["Plus Jakarta Sans", "sans-serif"],
+                        "clash": ["Clash Display", "sans-serif"]
+                }
+              },
+            },
+          }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #F8F8F8;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .clash-text { font-family: 'Clash Display', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-stagger-1 { animation: slideUp 0.6s ease-out 0.1s both; }
+        .animate-stagger-2 { animation: slideUp 0.6s ease-out 0.2s both; }
+        .animate-stagger-3 { animation: slideUp 0.6s ease-out 0.3s both; }
+        .animate-stagger-4 { animation: slideUp 0.6s ease-out 0.4s both; }
+        .animate-stagger-5 { animation: slideUp 0.6s ease-out 0.5s both; }
+
+        .investment-card:active { transform: scale(0.97); }
+        .transition-all-custom { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="flex justify-center items-start min-h-screen">
+<!-- Mobile Chassis Wrapper -->
+<div class="relative w-[375px] h-[812px] bg-white shadow-2xl overflow-hidden border-[8px] border-surface-dim rounded-[44px] my-8">
+<!-- iOS Status Bar & Notch -->
+<div class="h-11 w-full relative z-50 bg-white">
+<div class="w-[160px] h-[30px] bg-black mx-auto border-b-l-xl border-b-r-xl rounded-b-[18px] absolute top-0 left-1/2 -translate-x-1/2"></div>
+<div class="flex justify-between items-center px-6 pt-3">
+<span class="text-[14px] font-bold">9:41</span>
+<div class="flex gap-1.5 items-center">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">battery_full</span>
+</div>
+</div>
+</div>
+<!-- TopAppBar: Dashboard Branded Header -->
+<header class="sticky top-0 w-full z-40 flex justify-between items-center px-gutter-mobile py-4 bg-white">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden">
+<img alt="Scotia Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdiUi0m7cB4WKcIXBLAcBxFDBeSU4DzoSfu72IQ16Zqx7pkkH1Q2JkocvlaRSwwha8rZbBBqkQ0mFO0_ra4pt17N6s72m5ZRWgKU9WG5kyaX17Jg82_DaoWPYhw7Mq6OCaWVdid493wZBVGjdQddV9-T_UCHpFLLWnGb6UFUsGVtL7uKG81yaWdfkuC7UlTfsyePSVKHFfwVa8cwzV1JN6R_ORtzE3xUBYCY38vR1x9IGZSe-0Zxo15i761fH0ZVrVwCekr2ev_Irp"/>
+</div>
+<div class="flex flex-col -space-y-1">
+<span class="clash-text text-[20px] font-bold text-scotia-red leading-none tracking-tight">Scotia</span>
+<span class="clash-text text-[20px] font-bold text-scotia-red leading-none tracking-tight">FutureFlex</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-scotia-red">
+<button class="material-symbols-outlined text-[24px]">help_outline</button>
+<button class="material-symbols-outlined text-[24px]">notifications</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="overflow-y-auto h-[calc(812px-44px-72px-84px)] no-scrollbar bg-background">
+<div class="px-gutter-mobile pt-6 pb-xl">
+<!-- Page Title -->
+<section class="mb-xl animate-stagger-1">
+<h1 class="clash-text text-[32px] font-bold text-on-background leading-[1.1] mb-2">Select Investment Type</h1>
+<p class="text-text-muted text-[15px] font-medium leading-relaxed">Choose how you'd like to grow your future with Scotia FutureFlex.</p>
+</section>
+<!-- Investment List: Staggered Entrance -->
+<div class="space-y-4">
+<!-- Option: Mutual Funds -->
+<div class="investment-card animate-stagger-2 group bg-white p-5 rounded-[24px] shadow-sm border border-transparent hover:border-scotia-red/10 active:bg-gray-50 transition-all-custom cursor-pointer flex justify-between items-center" onclick="selectOption('Mutual Funds')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center text-scotia-red">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<div>
+<h3 class="clash-text font-bold text-[18px] text-on-background">Mutual Funds</h3>
+<p class="text-[13px] text-text-muted mt-0.5">Managed portfolios for long-term growth.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-gray-300 group-hover:text-scotia-red transition-colors text-[24px]">chevron_right</span>
+</div>
+<!-- Option: ETFs -->
+<div class="investment-card animate-stagger-3 group bg-white p-5 rounded-[24px] shadow-sm border border-transparent hover:border-scotia-red/10 active:bg-gray-50 transition-all-custom cursor-pointer flex justify-between items-center" onclick="selectOption('ETFs')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+</div>
+<div>
+<h3 class="clash-text font-bold text-[18px] text-on-background">ETFs</h3>
+<p class="text-[13px] text-text-muted mt-0.5">Diverse exchange-traded funds.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-gray-300 group-hover:text-scotia-red transition-colors text-[24px]">chevron_right</span>
+</div>
+<!-- Option: GICs -->
+<div class="investment-card animate-stagger-4 group bg-white p-5 rounded-[24px] shadow-sm border border-transparent hover:border-scotia-red/10 active:bg-gray-50 transition-all-custom cursor-pointer flex justify-between items-center" onclick="selectOption('GICs')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<h3 class="clash-text font-bold text-[18px] text-on-background">GICs</h3>
+<p class="text-[13px] text-text-muted mt-0.5">Guaranteed returns with zero risk.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-gray-300 group-hover:text-scotia-red transition-colors text-[24px]">chevron_right</span>
+</div>
+<!-- Option: Stocks -->
+<div class="investment-card animate-stagger-5 group bg-white p-5 rounded-[24px] shadow-sm border border-transparent hover:border-scotia-red/10 active:bg-gray-50 transition-all-custom cursor-pointer flex justify-between items-center" onclick="selectOption('Stocks')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center text-success-emerald">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+</div>
+<div>
+<h3 class="clash-text font-bold text-[18px] text-on-background">Stocks</h3>
+<p class="text-[13px] text-text-muted mt-0.5">Direct equity in global companies.</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-gray-300 group-hover:text-scotia-red transition-colors text-[24px]">chevron_right</span>
+</div>
+</div>
+<!-- Banner Section -->
+<div class="mt-8 animate-stagger-5 opacity-0 rounded-[28px] overflow-hidden relative aspect-[16/8] shadow-lg group">
+<img alt="Promo" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8x_mM4FJFAdMlPwRF0RZu1zLeOgH4s9BqYhnnntexYZBPL8QzeH2p82IIJqLPgW_X1wKfQHcN4eMH7tfhGcCf7I86LSQRKfTxGsl4DiuaWTc1xPM0Gl8M_s949YMgo3oxKj9Yvszdwg_bTn_ouZRU9WM3Lg-62EHDPl1BKOE-joiTkCWaTH0RK0HMArXGu9SWoFclz7_4qxr6DbJcOz3E96IxdcxAlzbJJwXpBeLh0fyP8Vg9MbN4p5AzZbyRqlcrv9XjgBZ7xG2g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+<div class="absolute bottom-5 left-5 right-5 flex justify-between items-end">
+<div>
+<p class="text-white/80 text-[11px] font-bold uppercase tracking-widest mb-1">Coming Soon</p>
+<h4 class="clash-text text-white text-xl font-bold">Crypto ETFs</h4>
+</div>
+<button class="bg-white/20 backdrop-blur-md text-white border border-white/30 px-4 py-2 rounded-xl text-[12px] font-bold">Notify Me</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation: Dashboard Style -->
+<nav class="absolute bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red transition-colors w-16">
+<span class="material-symbols-outlined text-[26px]">home</span>
+<span class="clash-text font-bold text-[10px] mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red transition-colors w-16">
+<span class="material-symbols-outlined text-[26px]">sync_alt</span>
+<span class="clash-text font-bold text-[10px] mt-1">Transfers</span>
+</button>
+<button class="flex flex-col items-center justify-center text-text-muted hover:text-scotia-red transition-colors w-16">
+<span class="material-symbols-outlined text-[26px]">redeem</span>
+<span class="clash-text font-bold text-[10px] mt-1">Rewards</span>
+</button>
+<button class="flex flex-col items-center justify-center text-scotia-red w-16">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="clash-text font-bold text-[10px] mt-1">Invest</span>
+</button>
+</nav>
+</div>
+<!-- Success Feedback Overlay -->
+<div class="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-xl" id="success-overlay">
+<div class="bg-white rounded-[32px] p-xl w-full max-w-[320px] text-center shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="success-card">
+<div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-lg">
+<span class="material-symbols-outlined text-scotia-red text-[48px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h3 class="clash-text font-bold text-2xl text-on-background mb-2">Confirmed</h3>
+<p class="text-text-muted text-[14px] mb-xl leading-relaxed" id="selected-type-text">Setting up your profile...</p>
+<div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+<div class="h-full bg-scotia-red w-0 transition-all duration-[1200ms] ease-out" id="progress-bar"></div>
+</div>
+</div>
+</div>
+<script>
+        function selectOption(typeName) {
+            const overlay = document.getElementById('success-overlay');
+            const card = document.getElementById('success-card');
+            const progressBar = document.getElementById('progress-bar');
+            const text = document.getElementById('selected-type-text');
+            
+            text.innerText = `Preparing your ${typeName} dashboard...`;
+            overlay.classList.remove('hidden');
+            
+            setTimeout(() => {
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+                progressBar.style.width = '100%';
+            }, 50);
+
+            setTimeout(() => {
+                overlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    location.reload();
+                }, 300);
+            }, 1800);
+        }
+    </script>
+<!-- ─── ANIMATION LAYER ─── -->
+<style>
+*{cursor:none!important}
+#sf-cur{position:fixed;width:12px;height:12px;background:#ed1c24;border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference}
+#sf-ring{position:fixed;width:38px;height:38px;border:2px solid rgba(237,28,36,.4);border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+#sf-glow{position:fixed;width:120px;height:120px;background:radial-gradient(circle,rgba(83,74,183,.15),transparent 70%);border-radius:50%;pointer-events:none;z-index:999997;transform:translate(-50%,-50%)}
+#sf-ov{position:fixed;inset:0;background:#534AB7;z-index:99998;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:opacity .5s ease,transform .6s cubic-bezier(.76,0,.24,1)}
+.sf-logo{color:#fff;font-family:'Clash Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.02em;opacity:0;transform:translateY(8px);transition:all .4s ease .1s}
+.sf-sub{color:rgba(255,255,255,.6);font-family:'Clash Display',sans-serif;font-size:11px;opacity:0;transition:all .4s ease .2s}
+@keyframes sfRipple{to{transform:scale(20);opacity:0}}
+.sf-lift{transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s!important}
+.sf-lift:hover{transform:translateY(-3px) scale(1.015)!important;box-shadow:0 12px 32px rgba(0,0,0,.14)!important}
+.sf-fade{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.sf-fade.sf-in{opacity:1;transform:none}
+</style>
+<div id="sf-cur"></div><div id="sf-ring"></div><div id="sf-glow"></div>
+<div id="sf-ov"><div class="sf-logo">Scotia FutureFlex</div><div class="sf-sub">Select Investment Type</div></div>
+<script>
+(function(){
+var C=document.getElementById('sf-cur'),R=document.getElementById('sf-ring'),G=document.getElementById('sf-glow');
+var mx=-200,my=-200,rx=-200,ry=-200,gx=-200,gy=-200;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+(function loop(){C.style.left=mx+'px';C.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;R.style.left=rx+'px';R.style.top=ry+'px';gx+=(mx-gx)*.06;gy+=(my-gy)*.06;G.style.left=gx+'px';G.style.top=gy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('button,a,[role=button],.cursor-pointer,input,select').forEach(function(el){
+  el.addEventListener('mouseenter',function(){C.style.width='5px';C.style.height='5px';R.style.width='54px';R.style.height='54px';R.style.borderColor='rgba(237,28,36,.8)'});
+  el.addEventListener('mouseleave',function(){C.style.width='12px';C.style.height='12px';R.style.width='38px';R.style.height='38px';R.style.borderColor='rgba(237,28,36,.4)'});
+});
+document.addEventListener('mousedown',function(){C.style.transform='translate(-50%,-50%) scale(.4)';R.style.transform='translate(-50%,-50%) scale(.8)'});
+document.addEventListener('mouseup',function(){C.style.transform='translate(-50%,-50%) scale(1)';R.style.transform='translate(-50%,-50%) scale(1)'});
+var OV=document.getElementById('sf-ov');
+var logo=OV.querySelector('.sf-logo'),sub=OV.querySelector('.sf-sub');
+setTimeout(function(){logo.style.opacity='1';logo.style.transform='translateY(0)';sub.style.opacity='1'},60);
+setTimeout(function(){OV.style.opacity='0';OV.style.transform='translateY(-100%)'},650);
+setTimeout(function(){OV.remove()},1200);
+setTimeout(function(){
+  var items=document.querySelectorAll('section,.rounded-xl,.rounded-2xl,[class*="stagger"],[class*="animate-slide"]');
+  items.forEach(function(el,i){if(!el.closest('#sf-ov')){el.classList.add('sf-fade');setTimeout(function(){el.classList.add('sf-in')},750+i*70)}});
+},120);
+document.querySelectorAll('button').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    var rpl=document.createElement('span');
+    rpl.style.cssText='position:absolute;border-radius:50%;background:rgba(255,255,255,.3);width:8px;height:8px;left:'+(e.offsetX-4)+'px;top:'+(e.offsetY-4)+'px;transform:scale(0);animation:sfRipple .5s ease forwards;pointer-events:none;';
+    if(getComputedStyle(this).position==='static')this.style.position='relative';
+    this.style.overflow='hidden';this.appendChild(rpl);setTimeout(function(){rpl.remove()},500);
+  });
+});
+document.querySelectorAll('.rounded-xl,.rounded-2xl,.shadow-sm,.shadow-md,.shadow-lg').forEach(function(el){
+  if(el.children.length>0&&!el.matches('nav,header,#sf-ov *'))el.classList.add('sf-lift');
+});
+function sfNav(url){document.body.style.transition='opacity .3s ease';document.body.style.opacity='0';setTimeout(function(){window.location.href=url},320)}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')sfNav('../index.html')});
+/* Navigation: selection cards → investment center (override the existing reload) */
+document.querySelectorAll('button').forEach(function(btn){
+  var t=btn.textContent.trim();
+  if(t.includes('arrow_back'))btn.onclick=function(){sfNav('../instant_starter_portfolio/code.html')};
+});
+/* Override investment type card clicks to navigate to investment center */
+setTimeout(function(){
+  document.querySelectorAll('[data-type],[class*="invest"],[class*="type-card"]').forEach(function(el){
+    el.addEventListener('click',function(e){e.stopPropagation();sfNav('../investment_center_animated_experience/code.html')});
+  });
+},200);
+})();
+</script>
+</body></html>
