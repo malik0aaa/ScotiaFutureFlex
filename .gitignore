@@ -1,42 +1,63 @@
-# ── Python ──────────────────────────────────────────
+# Python bytecode
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 .Python
 
-# ── Virtual environment ──────────────────────────────
+# Python virtual environments
 venv/
 env/
-.env/
 .venv/
 
-# ── Environment variables (never commit secrets) ─────
+# Environment files and secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+*.env
 
-# ── Database ─────────────────────────────────────────
+# Database / local app data
 *.db
 *.sqlite
 *.sqlite3
 
-# ── IDEs ─────────────────────────────────────────────
+# Logs
+*.log
+logs/
+
+# Test and coverage output
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Node / frontend tooling
+node_modules/
+Frontend/node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Frontend dev/server outputs
+Frontend/.cache/
+Frontend/dist/
+Frontend/build/
+Frontend/out/
+Frontend/.vite/
+
+# IDE / OS files
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
-
-# ── Pytest / coverage ────────────────────────────────
-.pytest_cache/
-.coverage
-htmlcov/
-
-# ── Build / dist ─────────────────────────────────────
-dist/
-build/
-*.egg-info/
-
-# ── Logs ─────────────────────────────────────────────
-*.log
+Thumbs.db
