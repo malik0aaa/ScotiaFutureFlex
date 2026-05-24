@@ -1,25 +1,7 @@
 (function () {
   'use strict';
 
-  function getApiBaseUrl() {
-    const fromGlobal = window.FUTUREFLEX_API_BASE;
-    if (fromGlobal) return fromGlobal;
-
-    const params = new URLSearchParams(window.location.search);
-    const fromQuery = params.get('apiBase') || params.get('apiBaseUrl');
-    if (fromQuery) return fromQuery;
-
-    try {
-      const fromStorage = window.localStorage.getItem('futureflex.apiBaseUrl');
-      if (fromStorage) return fromStorage;
-    } catch (error) {
-      // Ignore storage access failures and fall back to localhost.
-    }
-
-    return 'http://localhost:8000';
-  }
-
-  const apiBaseUrl = getApiBaseUrl();
+  const apiBaseUrl = 'http://localhost:8000';
 
   async function request(path, options = {}) {
     const response = await fetch(`${apiBaseUrl}${path}`, {
