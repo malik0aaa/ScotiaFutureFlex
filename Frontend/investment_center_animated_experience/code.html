@@ -522,7 +522,7 @@ document.querySelectorAll('button').forEach(function(btn){
                 var resp = await window.FutureFlexAPI.makeDeposit(user.id, amount);
                 // store deposit response for the confirmation screen and navigate immediately
                 try{ sessionStorage.setItem('last_deposit', JSON.stringify(resp)); }catch(e){}
-                sfNav('../investment_confirmation_simplified_flow/code.html');
+                window.location.href = '../investment_confirmation_simplified_flow/code.html';
             }catch(err){
                 console.error('Deposit failed', err);
                 btn.disabled = false; btn.classList.remove('opacity-70'); btn.textContent = orig;
@@ -553,9 +553,9 @@ document.querySelectorAll('nav button').forEach(function(btn){
                 if(m) amount = parseFloat(m[0]);
             }
             var user = await window.FutureFlexAPI.resolveDemoUser();
-            await window.FutureFlexAPI.makeDeposit(user.id, amount);
-            btn.textContent = 'Success'; btn.classList.remove('opacity-70'); btn.classList.add('bg-green-500');
-            setTimeout(function(){ sfNav('../financial_dashboard_animated_experience/code.html'); }, 900);
+            var resp = await window.FutureFlexAPI.makeDeposit(user.id, amount);
+            try{ sessionStorage.setItem('last_deposit', JSON.stringify(resp)); }catch(e){}
+            window.location.href = '../investment_confirmation_simplified_flow/code.html';
         }catch(err){
             console.error('Deposit failed', err);
             btn.disabled = false; btn.classList.remove('opacity-70'); btn.textContent = orig;
