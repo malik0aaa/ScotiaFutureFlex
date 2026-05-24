@@ -492,7 +492,7 @@ async function loadRewards(){
             + '<div class="w-12 h-12 rounded-xl ' + (reward.redeemed ? 'bg-gray-100 text-gray-400' : 'bg-red-50 text-scotia-red-bright') + ' flex items-center justify-center">'
             + '<span class="material-symbols-outlined text-[24px]">' + rewardIcon(reward) + '</span>'
             + '</div>'
-            + '<div><p class="font-bold text-[15px] text-on-surface">' + reward.name + '</p><p class="text-[11px] text-secondary font-bold uppercase tracking-wider mt-0.5">' + reward.xp_cost + ' XP</p></div>'
+            + '<div><p class="font-bold text-[15px] text-on-surface">' + reward.name + '</p><p class="text-[12px] text-secondary mt-1">' + (reward.description || '') + '</p><p class="text-[11px] text-secondary font-bold uppercase tracking-wider mt-2">' + reward.xp_cost + ' XP</p></div>'
             + '</div>'
             + buttonHtml
             + '</div>';

@@ -168,12 +168,7 @@ def seed():
                 points=40, label="Completed 4 habits",
                 created_at=now,
             ),
-            # Reward redemption (XP deducted — stored as negative)
-            models.XPEvent(
-                user_id=alex.id, event_type="reward",
-                points=-100, label="Redeemed: Monthly Fee Waiver",
-                created_at=now - timedelta(days=15),
-            ),
+            # (No pre-seeded reward redemption.)
         ]
         # Compute current total and adjust to land between 700-800 XP for demo.
         # We pick a target of 750 XP and add one adjustment event if needed.
@@ -206,52 +201,42 @@ def seed():
         db.add(streak)
 
         # ---------------------------------------------------------------
-        # 6. Rewards catalog (4 rewards)
+        # 6. Rewards catalog (user-requested list)
         # ---------------------------------------------------------------
         rewards = [
             models.Reward(
-                name="Monthly Fee Waiver",
-                description="Waive your monthly account fee for one month.",
-                xp_cost=100,
-                category="fee_waiver",
+                name="2x Scene+ boost — 1 week",
+                description="Double your Scene+ earn rate for 7 days (10 bonus Scene+ points).",
+                xp_cost=800,
+                category="scene",
                 is_active=True,
             ),
             models.Reward(
-                name="1% Cashback Boost",
-                description="Earn 1% extra cashback on all purchases for 7 days.",
+                name="Scotia Smart Money — 30 days",
+                description="Unlock premium budgeting insights and personalized tips for 30 days.",
                 xp_cost=200,
-                category="cashback",
+                category="premium",
                 is_active=True,
             ),
             models.Reward(
-                name="Bonus Interest Rate",
-                description="Get 0.5% bonus interest on your savings for 30 days.",
+                name="Scotia Advisor Chat — 30 min",
+                description="30-minute financial wellness session with an advisor.",
+                xp_cost=600,
+                category="advisor",
+                is_active=True,
+            ),
+            models.Reward(
+                name="Tuesday Movie On Us",
+                description="One free Cineplex ticket redeemable on Tuesdays.",
                 xp_cost=300,
-                category="bonus_interest",
-                is_active=True,
-            ),
-            models.Reward(
-                name="Free ETF Trade",
-                description="One commission-free ETF trade on Scotia iTRADE.",
-                xp_cost=500,
-                category="free_trade",
+                category="entertainment",
                 is_active=True,
             ),
         ]
         db.add_all(rewards)
         db.flush()   # flush so reward IDs are available below
 
-        # ---------------------------------------------------------------
-        # 7. UserReward — Alex already redeemed the Fee Waiver
-        # ---------------------------------------------------------------
-        fee_waiver = rewards[0]
-        user_reward = models.UserReward(
-            user_id=alex.id,
-            reward_id=fee_waiver.id,
-            xp_spent=fee_waiver.xp_cost,
-            redeemed_at=now - timedelta(days=15),
-        )
-        db.add(user_reward)
+        # No pre-redeemed rewards for the demo user.
 
         # ---------------------------------------------------------------
         # 8. Habits (4 daily habits)
