@@ -175,7 +175,23 @@ def seed():
                 created_at=now - timedelta(days=15),
             ),
         ]
-        # Total = 100+40+40+40+50+100+50+40+40+40+40-100 = 620 XP ✓
+        # Compute current total and adjust to land between 700-800 XP for demo.
+        # We pick a target of 750 XP and add one adjustment event if needed.
+        current_total = sum(ev.points for ev in xp_events)
+        target_total = 750
+        delta = target_total - current_total
+        if delta != 0:
+            # Create a single adjustment event so the seeded demo shows ~750 XP
+            adj_label = f"Seed adjustment ({'+' if delta>0 else ''}{delta} XP)"
+            xp_events.append(
+                models.XPEvent(
+                    user_id=alex.id,
+                    event_type="seed_adjust",
+                    points=delta,
+                    label=adj_label,
+                    created_at=now,
+                )
+            )
         db.add_all(xp_events)
 
         # ---------------------------------------------------------------
@@ -305,7 +321,9 @@ def seed():
         print("✓ Seed complete!")
         print(f"  User:       Alex Chen (id={alex.id})")
         print(f"  Portfolio:  balance=${portfolio.balance}, invested=${portfolio.total_invested}")
-        print(f"  XP:         620 total")
+        # Recompute and display the actual total XP inserted (including adjustment)
+        total_xp = sum(ev.points for ev in xp_events)
+        print(f"  XP:         {total_xp} total")
         print(f"  Streak:     {streak.current_streak} days current, {streak.longest_streak} days longest")
         print(f"  Rewards:    {len(rewards)} in catalog, 1 redeemed")
         print(f"  Habits:     {len(habits)} active")
