@@ -66,10 +66,9 @@ Wealthsimple has the UX. Scotiabank has the data, the trust, and the infrastruct
 
 ## Live Demo
 
-[Watch on YouTube →](#)
+[Watch on YouTube →](https://www.youtube.com/watch?v=DmlMCW45qc4&feature=youtu.be)
 
-[View Prototype →](https://stitch.withgoogle.com/projects/12028085271446287805)
-
+[View Prototype →](https://stitch.withgoogle.com/preview/12028085271446287805?node-id=253e3230d2f041809c1737d7665ce619&raw=1)
 ---
 
 *Built at [case]Hacks 2026 — Scotiabank Case*
